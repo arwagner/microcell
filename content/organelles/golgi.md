@@ -25,6 +25,6 @@ The Golgi, your cell's post office
 This is the Golgi apparatus, your cell's post office. Proteins arrive from the ER (endoplasmic reticulum), and the Golgi finishes, labels and sorts them. Then it ships them out in vesicles, tiny bubbles of membrane [inv]. It is a stack of curved, flat sacs, each stack about 0.6 micrometers (µm) across [used].
 
 ## Go deeper
-Your cell has one Golgi apparatus, made of several stacks that sit next to the nucleus [used][inv]. In human cells that line blood vessels, a stack's median width is 0.61 µm; in rat kidney cells, stacks of seven sacs are about 1 µm across [inv].
+Your cell has one Golgi apparatus, made of several stacks that sit next to the nucleus [used][inv]. In human cells that line blood vessels, the Golgi's small stacks, called mini-stacks, have a median width of 0.61 µm; in rat kidney cells, stacks of seven sacs are about 1 µm across [inv].
 
 It is small next to the ER. In COS-7 cells, a monkey cell line used for imaging, the ER has about 37 times the Golgi's volume [inv].
