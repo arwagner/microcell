@@ -6,11 +6,11 @@ Research for the content of the three machines (RNA polymerase II, the 80S ribos
 
 The other notes disagree: `research/processes.md` gives ATP synthase as "~25 nm tall", and `research/cell-inventory.md` gives "~20 nm tall, ~10 nm wide" for the bacterial enzyme. Neither is a measurement of the mammalian enzyme, and the papers that might state one (Rubinstein 2003, Davies 2011) could not be read in full here. The bovine cryo-EM paper [M2] was read in full and states no overall dimension.
 
-So the figure was measured directly in the deposited atomic model of the human enzyme, PDB 8H9S ("Human ATP synthase state 1 (combined)", cryo-EM, 2.53 Å) [M1]. 8H9S is one complete monomer: 28 protein chains, including α₃β₃ (the F₁ head), γ, δ, ε, a c₈ ring, the peripheral stalk subunits b, d, F6 and OSCP, and the membrane subunits. Method: take the line from the centre of the c-ring atoms to the centre of the α₃β₃ atoms as the rotor axis, then take the spread of every protein atom along it (height) and the largest distance of any atom from it.
+So the figure was measured directly in the deposited atomic model of the human enzyme, PDB 8H9S ("Human ATP synthase state 1 (combined)", cryo-EM, 2.53 Å) [M1]. 8H9S is one complete monomer: 28 protein chains, including α₃β₃ (the F₁ head), γ, δ, ε, a c₈ ring, the peripheral stalk subunits b, d, F6 and OSCP, and the membrane subunits. Method: take the line from the centre of the c-ring atoms to the centre of the α₃β₃ atoms as the rotor axis, then take the spread of every protein atom along it (height) and the largest distance of any atom from it. `research/measure-8h9s.mjs` reproduces every figure in the table below from the deposited coordinates (rerun 2026-11-19 with the same results).
 
 | Measured in 8H9S [M1] | Ångström | Rounded for the app |
 |---|---|---|
-| Whole enzyme, bottom of the c-ring to the top of the peripheral stalk, along the rotor axis | 233 | **about 23 nm tall** |
+| Whole enzyme, bottom of the membrane part (42 Å below the centre of the c-ring, 5 Å below the ring itself) to the top of the peripheral stalk, along the rotor axis | 233 | **about 23 nm tall** |
 | F₁ head (α₃β₃), height along the axis | 104 | about 10 nm tall |
 | F₁ head, farthest atom from the axis | 64 | about 13 nm across |
 | c-ring, height along the axis | 67 | about 7 nm tall |
