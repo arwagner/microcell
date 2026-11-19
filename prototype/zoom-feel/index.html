@@ -1,0 +1,429 @@
+<!doctype html>
+<!--
+  PROTOTYPE — throwaway. Answers: "How does zooming feel in the hand?"
+  One real multi-scale scene (1 unit = 1 nm): Cell → a mitochondrion → a crista Site → one ATP synthase.
+  Three interaction variants via ?variant=A|B|C (bottom bar or ← →). ?flight=<seconds> overrides the dive speed.
+  Look follows the settled visual style: textbook shading, colour = kind, hover label + highlight.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zoom Feel Prototype</title>
+<style>
+  :root { --bg: #f4f1ea; --ink: #222; --card: rgba(255,255,255,.94); }
+  html, body { margin: 0; height: 100%; overflow: hidden; font-family: system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  #c { display: block; width: 100vw; height: 100vh; touch-action: none; }
+  .card { background: var(--card); border: 1px solid rgba(0,0,0,.12); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+  #crumbs { position: fixed; left: 16px; top: 14px; padding: 6px 10px; font-size: 14px; z-index: 5; }
+  #crumbs a { color: #2a5bd7; cursor: pointer; text-decoration: none; }
+  #crumbs .stop { font-size: 11px; opacity: .6; margin-left: 8px; text-transform: uppercase; letter-spacing: .05em; }
+  #scale { position: fixed; right: 16px; bottom: 76px; padding: 8px 12px; font-size: 13px; z-index: 5; min-width: 180px; }
+  #scale .bar { height: 4px; background: #222; margin: 4px 0; width: 120px; }
+  #tip { position: fixed; pointer-events: none; padding: 4px 8px; font-size: 13px; font-weight: 600; display: none; z-index: 7; }
+  #panel { position: fixed; z-index: 6; padding: 14px 16px; font-size: 14px; line-height: 1.45; display: none; }
+  #panel h3 { margin: 0 0 6px; font-size: 17px; }
+  #panel .more { margin-top: 8px; font-size: 12px; opacity: .6; }
+  #panel .x { position: absolute; right: 10px; top: 8px; cursor: pointer; opacity: .5; }
+  .vA #panel { right: 16px; top: 64px; width: 300px; }
+  .vB #panel { left: 50%; transform: translateX(-50%); bottom: 70px; width: min(640px, 90vw); }
+  .vC #panel { width: 260px; }
+  #toast { position: fixed; left: 50%; top: 70px; transform: translateX(-50%); padding: 8px 14px; font-size: 14px; display: none; z-index: 8; }
+  #toast button { margin-left: 8px; }
+  #proc { position: fixed; left: 16px; bottom: 76px; padding: 8px 12px; font-size: 13px; display: none; z-index: 5; }
+  #proc button { margin-left: 8px; }
+  #slider { position: fixed; left: 20px; top: 90px; bottom: 150px; width: 44px; z-index: 5; display: none; }
+  #slider .track { position: absolute; left: 20px; top: 0; bottom: 0; width: 4px; background: #bbb; border-radius: 2px; }
+  #slider .knob { position: absolute; left: 10px; width: 24px; height: 24px; border-radius: 50%; background: #2a5bd7; cursor: grab; margin-top: -12px; }
+  #slider .tick { position: absolute; left: 30px; font-size: 11px; white-space: nowrap; transform: translateY(-50%); opacity: .7; }
+  #slider .tick::before { content: ''; display: inline-block; width: 8px; height: 2px; background: #888; vertical-align: middle; margin-right: 4px; }
+  #hint { position: fixed; left: 16px; top: 56px; font-size: 12px; opacity: .6; z-index: 5; }
+  #proto { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 10;
+    background: #111; color: #fff; border-radius: 999px; padding: 6px 10px; display: flex; gap: 10px; align-items: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4); font: 13px ui-monospace, monospace; border: 2px dashed #ff0; }
+  #proto button { background: #333; color: #fff; border: 0; border-radius: 999px; width: 28px; height: 28px; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="crumbs" class="card"></div>
+<div id="hint"></div>
+<div id="scale" class="card"></div>
+<div id="tip" class="card"></div>
+<div id="panel" class="card"></div>
+<div id="toast" class="card"></div>
+<div id="proc" class="card"></div>
+<div id="slider"><div class="track"></div><div class="knob"></div></div>
+<div id="proto"><button id="prev">←</button><span id="vlabel"></span><button id="next">→</button></div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ---------- variant switching ----------
+const VARIANTS = {
+  A: { name: 'Free zoom: scroll crosses stops by itself, side panel', autoCross: true, flight: 1.2 },
+  B: { name: 'Scale slider: a ruler you drag through the stops, bottom sheet', autoCross: true, flight: 1.2, slider: true },
+  C: { name: 'Dive only: scroll stays in a stop, click to go deeper, card by the thing', autoCross: false, flight: 2.4 },
+};
+const keys = Object.keys(VARIANTS);
+const params = new URLSearchParams(location.search);
+const V = keys.includes(params.get('variant')) ? params.get('variant') : 'A';
+const CFG = { ...VARIANTS[V] };
+if (params.get('flight')) CFG.flight = +params.get('flight');
+document.body.classList.add('v' + V);
+document.getElementById('vlabel').textContent = `${V} (${CFG.name})`;
+const idx = keys.indexOf(V);
+const go = v => { const p = new URLSearchParams(location.search); p.set('variant', v); location.search = p.toString(); };
+document.getElementById('prev').onclick = () => go(keys[(idx + keys.length - 1) % keys.length]);
+document.getElementById('next').onclick = () => go(keys[(idx + 1) % keys.length]);
+addEventListener('keydown', e => {
+  if (e.target.closest('input,textarea,[contenteditable]')) return;
+  if (e.key === 'ArrowLeft') document.getElementById('prev').click();
+  if (e.key === 'ArrowRight') document.getElementById('next').click();
+  if (e.key === 'Escape' && focus.parent) diveTo(focus.parent);
+});
+document.getElementById('hint').textContent = {
+  A: 'scroll/pinch = zoom (keeps going into what\'s in the middle) · click = dive · drag = orbit · Esc = up',
+  B: 'drag the ruler or scroll = zoom through the stops · click = dive · drag = orbit · Esc = up',
+  C: 'scroll = zoom within this stop · click = dive deeper · drag = orbit · Esc or breadcrumb = up',
+}[V];
+
+// ---------- scene (1 unit = 1 nm) ----------
+const COL = { membrane: '#8cc8f0', nucleus: '#7b6cd9', mito: '#e8604c', cristae: '#f39a7e', lyso: '#b85ccf', atps: '#2f8f83', crista_site: '#f39a7e' };
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, logarithmicDepthBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#f4f1ea');
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.05, 2e6);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xb0a890, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(1, 2, 1.5); scene.add(sun);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.enableZoom = false; controls.enablePan = false;
+
+let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const rv = (a, b) => a + (b - a) * rnd();
+const randDir = () => { const v = new THREE.Vector3(rv(-1, 1), rv(-1, 1), rv(-1, 1)); return v.lengthSq() > 1 || v.lengthSq() < .01 ? randDir() : v.normalize(); };
+const mat = (c, o = 1) => new THREE.MeshStandardMaterial({ color: c, roughness: .55, transparent: o < 1, opacity: o, depthWrite: o >= 1, side: o < 1 ? THREE.DoubleSide : THREE.FrontSide });
+
+// Nodes are the things you can focus on. stop: which band you're in when it's the focus.
+const INFO = {
+  cell: ['Cell', 'A human cell about 18 µm across. Everything you see is packed inside one oily skin, the plasma membrane.'],
+  nucleus: ['Nucleus', 'Holds the cell\'s DNA. (Its inside isn\'t built in this prototype.)'],
+  mito: ['Mitochondrion', 'The cell\'s power plant. Its inner membrane is folded into cristae, where ATP is made.'],
+  lyso: ['Lysosome', 'A bag of digestive enzymes.'],
+  site: ['ATP synthase site', 'The edge of a crista, lined with ATP synthase machines. Each spins like a turbine, driven by protons flowing through it, and makes ATP, the cell\'s fuel.'],
+  atps: ['ATP synthase', 'A rotary motor about 10 nm wide. Protons flowing through the ring in the membrane turn the rotor; each full turn makes 3 ATP.'],
+  ring: ['c-ring (rotor)', 'A ring of 8 subunits in the membrane. Each proton that passes pushes it round one step.'],
+  stalk: ['Central stalk', 'The axle. It turns with the ring and twists the head above it.'],
+  head: ['F1 head', 'Three pairs of subunits. As the axle turns, each pair squeezes ADP and phosphate together into ATP.'],
+  stator: ['Peripheral stalk (stator)', 'Holds the head still so the axle can turn inside it.'],
+  cristae: ['Crista', 'A fold of the inner membrane.'],
+};
+const nodes = [];
+function node(id, kind, obj, { parent = null, stop, frame, diveable = true, site = false } = {}) {
+  const n = { id, kind, obj, parent, stop, frame, diveable, site, children: [] };
+  if (parent) parent.children.push(n);
+  obj.traverse(o => { if (o.isMesh && !o.userData.node) o.userData.node = n; });
+  nodes.push(n); return n;
+}
+function centerOf(n) { return n.obj.getWorldPosition(new THREE.Vector3()); }
+
+const R = 9000, NR = 3200;
+const cellObj = new THREE.Group(); scene.add(cellObj);
+const cellMesh = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), mat(COL.membrane, .16));
+cellObj.add(cellMesh);
+const cell = node('cell', 'cell', cellObj, { stop: 'Cell', frame: 26000 });
+cellMesh.userData.enclosing = true;
+const nucPos = new THREE.Vector3(-1200, 0, -500);
+const nuc = new THREE.Mesh(new THREE.SphereGeometry(NR, 64, 48), mat(COL.nucleus, .8)); nuc.position.copy(nucPos); cellObj.add(nuc);
+node('nucleus', 'nucleus', nuc, { parent: cell, stop: 'Organelle', frame: 9000, diveable: false });
+
+// mitochondria, each with cristae shown only up close; only the featured one has a Site
+const mitoGeo = new THREE.CapsuleGeometry(320, 1300, 12, 32);
+const cristaGeo = new THREE.CylinderGeometry(270, 270, 20, 48); cristaGeo.rotateZ(Math.PI / 2);
+const mitos = [];
+for (let i = 0; i < 34; i++) {
+  let p;
+  if (i === 0) p = new THREE.Vector3(2600, 900, 5400);
+  else for (;;) { p = randDir().multiplyScalar(rv(4500, R - 1200)); if (p.distanceTo(nucPos) > NR + 1300) break; }
+  const g = new THREE.Group(); g.position.copy(p);
+  g.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), i === 0 ? new THREE.Vector3(1, 0.3, 0).normalize() : randDir());
+  const shell = new THREE.Mesh(mitoGeo, mat(COL.mito)); g.add(shell);
+  const inner = new THREE.Group(); inner.visible = false; g.add(inner);
+  for (let k = 0; k < 9; k++) {
+    const c = new THREE.Mesh(cristaGeo, mat(COL.cristae)); c.rotation.z = Math.PI / 2; c.position.y = -560 + k * 140; c.scale.set(1, 1, rv(.6, .9));
+    inner.add(c);
+  }
+  cellObj.add(g);
+  const n = node('mito' + i, 'mito', g, { parent: cell, stop: 'Organelle', frame: 2600 });
+  inner.traverse(o => { if (o.isMesh) o.userData.node = n; });
+  mitos.push({ n, shell, inner });
+}
+for (let i = 0; i < 14; i++) {
+  const m = new THREE.Mesh(new THREE.SphereGeometry(300, 20, 14), mat(COL.lyso));
+  for (;;) { const p = randDir().multiplyScalar(rv(4500, R - 700)); if (p.distanceTo(nucPos) > NR + 900) { m.position.copy(p); break; } }
+  cellObj.add(m); node('lyso' + i, 'lyso', m, { parent: cell, stop: 'Organelle', frame: 1500, diveable: false });
+}
+
+// ATP synthase model (~25 nm tall), built along +Y with the membrane at y=0
+function makeATPS(detailed) {
+  const g = new THREE.Group();
+  const rotor = new THREE.Group(); g.add(rotor);
+  const ring = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 3.2, 4, detailed ? 8 : 12), mat('#3fa99c')); rotor.add(ring);
+  const stalk = new THREE.Mesh(new THREE.CylinderGeometry(.9, .9, 9, 10), mat('#c9a227')); stalk.position.y = 6.5; rotor.add(stalk);
+  const head = new THREE.Group(); head.position.y = 13;
+  for (let k = 0; k < 6; k++) { const s = new THREE.Mesh(new THREE.SphereGeometry(2.4, 16, 12), mat(k % 2 ? '#2f8f83' : '#5fc3b4')); const a = k / 6 * Math.PI * 2; s.position.set(Math.cos(a) * 2.7, 0, Math.sin(a) * 2.7); head.add(s); }
+  g.add(head);
+  const stator = new THREE.Group();
+  const st = new THREE.Mesh(new THREE.CylinderGeometry(.6, .6, 15, 8), mat('#8a8a8a')); st.position.set(5.6, 7, 0); stator.add(st);
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(5, 1.2, 1.6), mat('#8a8a8a')); cap.position.set(3.4, 15.2, 0); stator.add(cap);
+  const a = new THREE.Mesh(new THREE.BoxGeometry(2.6, 4, 3), mat('#8a8a8a')); a.position.set(4.6, 0, 0); stator.add(a);
+  g.add(stator);
+  return { g, rotor, parts: { ring, stalk, head, stator } };
+}
+const featured = mitos[0];
+const siteGroup = new THREE.Group(); siteGroup.visible = false;
+const cristaIdx = 4, cristaY = -560 + cristaIdx * 140;
+siteGroup.position.set(0, cristaY, 0);
+featured.inner.children[cristaIdx].scale.z = 1; // full disc so the rim is round
+featured.n.obj.add(siteGroup);
+const rotors = []; let featuredATPS;
+for (let k = 0; k < 64; k++) {
+  const a = k / 64 * Math.PI * 2;
+  const m = makeATPS(k === 0);
+  // sit on the crista rim (radius 270), pointing out into the matrix
+  m.g.position.set(Math.cos(a) * 262, 0, Math.sin(a) * 262);
+  m.g.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(Math.cos(a), 0, Math.sin(a)));
+  m.g.rotateY(rv(0, 6.28));
+  siteGroup.add(m.g); rotors.push(m.rotor);
+  if (k === 0) featuredATPS = m;
+}
+const siteAnchor = new THREE.Object3D(); siteAnchor.position.set(262, 0, 0); siteGroup.add(siteAnchor);
+const site = node('site', 'site', siteAnchor, { parent: featured.n, stop: 'Machinery', frame: 220, site: true });
+siteGroup.traverse(o => { if (o.isMesh) o.userData.node = site; });
+const atpsAnchor = new THREE.Object3D(); atpsAnchor.position.y = 8; featuredATPS.g.add(atpsAnchor);
+const atps = node('atps', 'atps', atpsAnchor, { parent: site, stop: 'Molecule', frame: 45 });
+featuredATPS.g.traverse(o => { if (o.isMesh) o.userData.node = atps; });
+for (const [k, part] of Object.entries(featuredATPS.parts)) part.traverse(o => { if (o.isMesh) o.userData.part = k; });
+
+// ---------- focus, framing, flights ----------
+let focus = cell;
+let dist = cell.frame;
+const minD = n => n.frame * .35, maxD = n => n.frame * 2.2;
+camera.position.set(0, 4000, cell.frame); controls.target.set(0, 0, 0);
+let flight = null;
+function diveTo(n, { panel = true } = {}) {
+  if (!n) return;
+  const from = { target: controls.target.clone(), dist: camera.position.distanceTo(controls.target), dir: camera.position.clone().sub(controls.target).normalize() };
+  const to = { target: centerOf(n), dist: n.frame };
+  // look at the Site and the machine from the matrix side, a little above
+  let dir = from.dir.clone();
+  if (n.kind === 'site' || n.kind === 'atps') {
+    const M = featured.n.obj.matrixWorld;
+    const out = new THREE.Vector3(1, 0, 0).transformDirection(M), side = new THREE.Vector3(0, 0, 1).transformDirection(M), up = new THREE.Vector3(0, 1, 0).transformDirection(M);
+    dir = side.add(out.multiplyScalar(.7)).add(up.multiplyScalar(.35)).normalize();
+  }
+  flight = { from, to, dir, t0: performance.now(), dur: CFG.flight * 1000 };
+  focus = n; refreshUI(panel);
+}
+function frameNow() {
+  if (!flight) return;
+  const e0 = Math.min(1, (performance.now() - flight.t0) / flight.dur);
+  const e = e0 < .5 ? 4 * e0 ** 3 : 1 - (-2 * e0 + 2) ** 3 / 2;
+  const d = Math.exp(Math.log(flight.from.dist) * (1 - e) + Math.log(flight.to.dist) * e); // log-space distance so 100× feels even
+  const t = flight.from.target.clone().lerp(flight.to.target, e);
+  const dir = flight.from.dir.clone().lerp(flight.dir, e).normalize();
+  controls.target.copy(t); camera.position.copy(t).addScaledVector(dir, d); dist = d;
+  if (e0 >= 1) flight = null;
+}
+
+// zoom: our own, so stop crossings can be decided in one place
+const ray = new THREE.Raycaster();
+function childAtCenter() {
+  ray.setFromCamera(new THREE.Vector2(0, 0), camera);
+  const kids = focus.children.filter(c => c.diveable);
+  if (!kids.length) return null;
+  const hits = ray.intersectObjects(scene.children, true).filter(h => h.object.visible && kids.includes(h.object.userData.node));
+  if (hits[0]) return hits[0].object.userData.node;
+  // nothing dead centre: take the diveable child nearest the centre of the screen, if close
+  let best = null, bd = .25;
+  for (const k of kids) { const p = centerOf(k).project(camera); const d = Math.hypot(p.x, p.y); if (p.z < 1 && d < bd) { bd = d; best = k; } }
+  return best;
+}
+let edgeCool = 0;
+function zoomBy(factor) {
+  if (flight) return;
+  const want = dist * factor;
+  if (want < minD(focus)) {
+    dist = minD(focus);
+    if (performance.now() < edgeCool) return;
+    const kid = childAtCenter();
+    if (CFG.autoCross && kid) { diveTo(kid); edgeCool = performance.now() + 600; }
+    else if (CFG.autoCross && focus.kind === 'mito' && !focus.children.length) toast('No machinery is built inside this mitochondrion.', 'Go to the nearest Site', () => diveTo(site));
+    else if (CFG.autoCross && !kid && focus.children.length) toast('Aim at something to go deeper, or click it.');
+    else if (!CFG.autoCross && focus.children.some(c => c.diveable)) toast('This is as close as this stop goes. Click something to dive deeper.');
+    else if (!focus.children.length) toast('This is as deep as it goes here.');
+  } else if (want > maxD(focus)) {
+    dist = maxD(focus);
+    if (performance.now() < edgeCool) return;
+    if (CFG.autoCross && focus.parent) { diveTo(focus.parent); edgeCool = performance.now() + 600; }
+    else if (!CFG.autoCross && focus.parent) toast('Press Esc or use the breadcrumb to go back up.');
+  } else dist = want;
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  camera.position.copy(controls.target).addScaledVector(dir, dist);
+}
+canvas.addEventListener('wheel', e => { e.preventDefault(); zoomBy(Math.exp(e.deltaY * (e.ctrlKey ? .01 : .0015))); }, { passive: false });
+// pinch
+const pts = new Map(); let pinch0 = null;
+canvas.addEventListener('pointerdown', e => { pts.set(e.pointerId, [e.clientX, e.clientY]); if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch0 = Math.hypot(a[0] - b[0], a[1] - b[1]); } });
+canvas.addEventListener('pointermove', e => { if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, [e.clientX, e.clientY]); if (pts.size === 2 && pinch0) { const [a, b] = [...pts.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); zoomBy(pinch0 / d); pinch0 = d; } });
+addEventListener('pointerup', e => { pts.delete(e.pointerId); if (pts.size < 2) pinch0 = null; });
+
+// ---------- hover label + highlight, click = dive (or panel for things you can't enter) ----------
+const tip = document.getElementById('tip'), panel = document.getElementById('panel');
+let hoverMesh = null;
+function pickAt(x, y) {
+  ray.setFromCamera(new THREE.Vector2(x / innerWidth * 2 - 1, -(y / innerHeight) * 2 + 1), camera);
+  const hits = ray.intersectObjects(scene.children, true).filter(h => h.object.isMesh && h.object.visible && h.object.userData.node && !h.object.userData.enclosing);
+  // ignore the thing you're inside (its shell surrounds the camera)
+  return hits.find(h => !(h.object.userData.node === focus && focus.kind === 'mito' && h.object.geometry === mitoGeo)) || null;
+}
+function setHighlight(m) {
+  if (hoverMesh === m) return;
+  if (hoverMesh) { hoverMesh.material.emissive?.setHex(0); }
+  hoverMesh = m;
+  if (m) { m.material = m.material.clone(); m.material.emissive.set('#ffffff'); m.material.emissiveIntensity = .35; }
+}
+let down = null;
+canvas.addEventListener('pointerdown', e => down = [e.clientX, e.clientY]);
+canvas.addEventListener('pointermove', e => {
+  const h = pickAt(e.clientX, e.clientY);
+  if (!h) { setHighlight(null); tip.style.display = 'none'; canvas.style.cursor = ''; return; }
+  const n = h.object.userData.node, part = focus === atps && h.object.userData.part;
+  // highlight the whole featured machine/part group as one thing
+  setHighlight(h.object);
+  tip.textContent = part ? INFO[part][0] : INFO[n.kind][0];
+  tip.style.display = 'block'; tip.style.left = e.clientX + 14 + 'px'; tip.style.top = e.clientY + 10 + 'px';
+  canvas.style.cursor = 'pointer';
+});
+canvas.addEventListener('pointerup', e => {
+  if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5) return;
+  const h = pickAt(e.clientX, e.clientY); if (!h) return;
+  const n = h.object.userData.node, part = focus === atps && h.object.userData.part;
+  if (part) return showPanel(...INFO[part]);
+  if (n === focus) return showPanel(...INFO[n.kind]);
+  if (n.diveable) {
+    // clicking a crista or a machine inside a mitochondrion you aren't in yet: dive into the mitochondrion first
+    let tgt = n; while (tgt.parent && tgt.parent !== focus && isAncestor(focus, tgt.parent)) tgt = tgt.parent;
+    diveTo(tgt);
+  } else { showPanel(...INFO[n.kind]); if (n.kind === 'nucleus') toast('Diving into the nucleus is coming later.'); }
+});
+const isAncestor = (a, b) => { for (let x = b.parent; x; x = x.parent) if (x === a) return true; return false; };
+
+function showPanel(title, body) {
+  panel.innerHTML = `<span class="x">✕</span><h3>${title}</h3>${body}<div class="more">Go deeper → (not in prototype)</div>`;
+  panel.style.display = 'block';
+  panel.querySelector('.x').onclick = () => panel.style.display = 'none';
+}
+let toastTimer;
+function toast(msg, btn, fn) {
+  const t = document.getElementById('toast');
+  t.innerHTML = msg + (btn ? `<button>${btn}</button>` : '');
+  if (btn) t.querySelector('button').onclick = () => { t.style.display = 'none'; fn(); };
+  t.style.display = 'block'; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = 'none', 3500);
+}
+
+// ---------- breadcrumb, scale bar, process badge, slider ----------
+function refreshUI(panelToo) {
+  const chain = []; for (let x = focus; x; x = x.parent) chain.unshift(x);
+  const crumbs = document.getElementById('crumbs');
+  crumbs.innerHTML = chain.map((n, i) => i < chain.length - 1 ? `<a data-i="${i}">${INFO[n.kind][0]}</a>` : `<b>${INFO[n.kind][0]}</b>`).join(' › ') + `<span class="stop">${focus.stop} stop</span>`;
+  crumbs.querySelectorAll('a').forEach(a => a.onclick = () => diveTo(chain[+a.dataset.i]));
+  if (panelToo) showPanel(...INFO[focus.kind]);
+  document.getElementById('proc').style.display = (focus === site || focus === atps) ? 'block' : 'none';
+}
+const COMPARE = [[70000, 'a human hair\'s width'], [7500, 'a red blood cell'], [2000, 'a bacterium'], [100, 'a flu virus'], [25, 'a ribosome'], [2, 'the width of DNA']];
+function fmt(nm) { return nm >= 1000 ? (nm / 1000).toPrecision(2) + ' µm' : nm >= 10 ? Math.round(nm) + ' nm' : nm.toPrecision(2) + ' nm'; }
+function updateScale() {
+  const w = 2 * dist * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
+  const barNm = w * 120 / innerWidth;
+  let cmp = COMPARE.find(([s]) => w / s >= 1 && w / s < 40) || COMPARE[COMPARE.length - 1];
+  const ratio = w / cmp[0];
+  document.getElementById('scale').innerHTML = `<div class="bar"></div>${fmt(barNm)}<div style="opacity:.7;font-size:12px">screen ≈ ${fmt(w)} wide · ${ratio >= 1.5 ? '≈ ' + Math.round(ratio) + '× ' : 'about '}${cmp[1]}</div>`;
+}
+let spinning = true;
+const SLOWED = 700; // real: ~350 turns/s (BioNumbers 104890); shown at 0.5 turns/s
+const proc = document.getElementById('proc');
+proc.innerHTML = `ATP synthase spinning · <b>slowed ×${SLOWED}</b><button>pause</button>`;
+proc.querySelector('button').onclick = e => { spinning = !spinning; e.target.textContent = spinning ? 'pause' : 'play'; };
+
+const slider = document.getElementById('slider'), knob = slider.querySelector('.knob');
+const SMIN = Math.log(15), SMAX = Math.log(60000);
+if (CFG.slider) {
+  slider.style.display = 'block';
+  for (const n of [cell, mitos[0].n, site, atps]) {
+    const t = document.createElement('div'); t.className = 'tick';
+    t.style.top = (1 - (Math.log(n.frame) - SMIN) / (SMAX - SMIN)) * 100 + '%'; t.textContent = n.stop; slider.appendChild(t);
+  }
+  let dragging = false;
+  knob.addEventListener('pointerdown', e => { dragging = true; knob.setPointerCapture(e.pointerId); e.stopPropagation(); });
+  knob.addEventListener('pointerup', () => dragging = false);
+  knob.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const r = slider.getBoundingClientRect(); const f = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+    const target = Math.exp(SMAX - f * (SMAX - SMIN));
+    zoomBy(target / dist);
+  });
+}
+function updateSlider() { if (CFG.slider) knob.style.top = (1 - (Math.log(dist) - SMIN) / (SMAX - SMIN)) * 100 + '%'; }
+
+// ---------- detail by distance (what appears as you go down) ----------
+function updateDetail() {
+  const cam = camera.position;
+  for (const m of mitos) {
+    const d = cam.distanceTo(centerOf(m.n));
+    const inside = focus === m.n || isAncestor(m.n, focus);
+    m.inner.visible = d < 6000;
+    m.shell.material.transparent = true; m.shell.material.depthWrite = !(inside || d < 4000);
+    m.shell.material.opacity = inside ? .22 : d < 4000 ? .5 : 1;
+  }
+  siteGroup.visible = cam.distanceTo(centerOf(site)) < 2500;
+  // below the Organelle stop, everything outside the focused mitochondrion is hidden so the machinery reads clearly
+  const deep = focus === site || focus === atps;
+  for (const n of nodes) if (n.parent === cell && n !== featured.n) n.obj.visible = !deep;
+  if (deep) featured.shell.material.opacity = .1;
+  cellMesh.material.opacity = focus === cell ? .16 : .06;
+}
+
+// ---------- run ----------
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+refreshUI(false);
+// ?at=mito|site|atps jumps straight there (for screenshots)
+const AT = { mito: mitos[0].n, site, atps }[params.get('at')];
+if (AT) { scene.updateMatrixWorld(true); const f = CFG.flight; CFG.flight = 0.001; for (const n of [mitos[0].n, site, atps]) { diveTo(n); flight.t0 -= 10; frameNow(); if (n === AT) break; } CFG.flight = f; }
+if (V === 'C') panel.style.display = 'none';
+let last = performance.now();
+renderer.setAnimationLoop(now => {
+  const dt = (now - last) / 1000; last = now;
+  frameNow(); controls.update();
+  dist = camera.position.distanceTo(controls.target);
+  if (spinning) for (const r of rotors) r.rotation.y += dt * Math.PI * 2 * 0.5;
+  updateDetail(); updateScale(); updateSlider();
+  if (V === 'C' && panel.style.display === 'block') {
+    const p = centerOf(focus).project(camera);
+    panel.style.left = Math.min(innerWidth - 280, (p.x * .5 + .5) * innerWidth + 40) + 'px';
+    panel.style.top = Math.max(60, (-p.y * .5 + .5) * innerHeight - 60) + 'px';
+  }
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>
