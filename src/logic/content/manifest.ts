@@ -1,5 +1,5 @@
 // Validator for assets/manifest.json: one entry per external asset, so the Credits page can be built from it
-// and nothing ships without a known source and license (see research/3d-assets.md, "Attribution").
+// and nothing ships without a known source and license (see research/3d-assets.md, "Recommendation", item 4).
 
 export type AssetUse = "required" | "courtesy";
 
