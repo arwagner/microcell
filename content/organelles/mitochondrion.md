@@ -27,7 +27,7 @@ sources:
 A mitochondrion, one of your cell's power plants
 
 ## Paragraph
-This is a mitochondrion, one of your cell's power plants. It burns sugar and fat with oxygen to make ATP, the small molecule your cell spends as energy. It is about 1 µm long and has two membranes [used][inv]. The inner one folds into shelves called cristae, which hold the machines that make ATP [inv][mol].
+This is a mitochondrion, one of your cell's power plants. It burns sugar and fat with oxygen to make ATP, the small molecule your cell spends as energy [inv]. It is about 1 µm long and has two membranes [used][inv]. The inner one folds into shelves called cristae, which hold the machines that make ATP [inv][mol].
 
 ## Go deeper
 A HeLa cell has roughly 350 to 770 mitochondria, more as it grows toward dividing [used]. A rat liver cell has about 1,665, and mitochondria fill 22% of a liver cell's volume, far more than in most cells [inv][vol].

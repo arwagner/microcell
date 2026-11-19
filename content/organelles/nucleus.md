@@ -24,7 +24,7 @@ sources:
 The nucleus, where your DNA is kept
 
 ## Paragraph
-This is the nucleus, your cell's control room. It holds your DNA, the instructions for building everything the cell makes. It is about 7.5 micrometers (µm, thousandths of a millimeter) across [used]. A double membrane wraps it, pierced by thousands of pores that act as gates [inv].
+This is the nucleus, your cell's control room. It holds your DNA, the instructions for building everything the cell makes [inv]. It is about 7.5 micrometers (µm, thousandths of a millimeter) across [used]. A double membrane wraps it, pierced by thousands of pores that act as gates [inv].
 
 ## Go deeper
 Your cell has one nucleus [used]. Stretched out end to end, the DNA packed inside it would reach about 2 meters [mol].
