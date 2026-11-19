@@ -88,6 +88,31 @@ Priority: **A** = a beginner must meet it; **B** = worth meeting; **C** = "go de
 
 Note on mitochondria: in many living cells they fuse and split, forming branching networks rather than separate beans (Alberts notes new mitochondria arise by growth and fission [S1]). The liver-cell count of ~1,665 is from rat [S15]. Mitochondria take up 22% of a liver cell [S2], far more than in most cells.
 
+### Organelle figures the app uses
+
+The app needs one size and one count range per organelle to lay out the cell. This table picks them from the inventory above. Where the app needs one number from a measured range, the number it uses is marked *(derived)* and the reason given. Where no measured count exists, the count is marked **unconfirmed**: it is a placeholder for drawing only, and the app must not state it as fact.
+
+| Organelle | Size the app uses (what it measures) | Count per cell the app uses | Source |
+|---|---|---|---|
+| Plasma membrane | 5 nm (thickness of the lipid bilayer, rule of thumb; 3.4–4.4 nm by X-ray) | 1 | [S9] |
+| Nucleus | 7,500 nm across *(derived: a sphere of the HeLa nucleus's 220 µm³)* | 1 | [S6] |
+| Nucleolus | 1,000 nm ("a micrometer or more") | 1–10 (usually 1 to a few [S1]; "after mitosis, human nuclei initially contain 10 nucleoli, which later fuse to form fewer larger ones" [S53]) | [S1], [S53] |
+| Rough ER | 25 nm (width of the inside space of one flattened sac, 20–30 nm) *(derived: middle of the range)* | 1 (one connected network) | [S1] |
+| Smooth ER | 45 nm (tube diameter, 30–60 nm) *(derived: middle of the range)* | 1 (part of the same network as the rough ER) | [S1] |
+| Golgi apparatus | 610 nm (one stack; median mini-stack 0.612 µm in human endothelial cells) | 1 (made of several stacks) | [S35] |
+| Mitochondrion | 1,000 nm long (~1 µm in mammalian culture cells; ~0.5 µm wide) | 350–770 *(derived: 0.39 mitochondria per µm³ of HeLa cytoplasm × HeLa cytoplasm of 891–1,973 µm³ through the cell cycle, rounded to the nearest 10)* | [S14], [S52] |
+| Lysosome | 500 nm | 90–190 (COS-7) | [S18], [S17] |
+| Peroxisome | 150 nm (0.1–0.2 µm) *(derived: middle of the range)* | 90–190 (COS-7) | [S19], [S17] |
+| Transport vesicle | 50 nm (rule of thumb; measured 40–80 nm) | 1,000–10,000 **unconfirmed**: a placeholder reading of "many thousands"; no primary per-cell count found | [S20] (size only) |
+| Microtubule | 25 nm (diameter; 24–25 nm) | 250 **unconfirmed**: the number in model-fitted example cells (A-431, U-2 OS, U-251MG) shown in one imaging study, not a measured count | [S28], [S29]; count [S54] |
+| Centrosome | 440 nm (length of one centriole, mean 439 nm; ~200–250 nm wide). The cloud of pericentriolar material around the centrioles is left out: its size is not confirmed | 1–2 (2 just before division) | [S39], [S40] |
+
+Sources added for this table (numbered after the main list):
+
+- **[S52]** Posakony JW, England JM, Attardi G. "Mitochondrial growth and division during the cell cycle in HeLa cells." *J Cell Biol* 1977;74:468, via BioNumbers 109398 (0.39 mitochondria per µm³ of HeLa cytoplasm, p. 485) and 109404 (HeLa cytoplasmic volume 891–1,973 µm³ from 0 to 19 h after mitosis, Table II). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=109398 , https://bionumbers.hms.harvard.edu/bionumber.aspx?id=109404
+- **[S53]** Caragine CM, Haley SC, Zidovska A. "Nucleolar dynamics and interactions with nucleoplasm in living cells." *eLife* 2019;8:e47533, section 2.1 ("After mitosis, human nuclei initially contain 10 nucleoli, which later fuse to form fewer larger ones", citing Savino et al. 2001). https://pmc.ncbi.nlm.nih.gov/articles/PMC6879204/
+- **[S54]** Li J, Shariff A, Wiking M, Lundberg E, Rohde GK, Murphy RF. "Estimating microtubule distributions from 2D immunofluorescence microscopy images reveals differences among human cultured cell lines." *PLoS One* 2012;7:e50292, Fig. 4 (example cells: "Number of microtubules = 250"). https://pmc.ncbi.nlm.nih.gov/articles/PMC3508979/
+
 ---
 
 ## Scale 3: macromolecules and molecular machines
