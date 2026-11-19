@@ -28,4 +28,6 @@ items:
 ---
 
 ## Notes
-A human scalp hair is 60 to 80 µm wide; we use the middle, 70 µm [inv-familiar]. A red blood cell is a disc about 7.7 µm wide and 2 µm thick [inv-familiar]. The bacterium is E. coli, about 1 µm wide and 2.6 to 4 µm long [inv-familiar]. A flu virus is 85 to 120 nm across; we use 100 nm [inv-familiar]. A ribosome is about 30 nm across, and DNA's double helix about 2 nm wide [inv-familiar].
+A human scalp hair is 60 to 80 µm (micrometers, thousandths of a millimeter) wide; we use the middle, 70 µm [inv-familiar]. A red blood cell is a disc about 7.7 µm wide and 2 µm thick [inv-familiar]. The bacterium is one called E. coli (short for Escherichia coli), about 1 µm wide and 2.6 to 4 µm long [inv-familiar].
+
+A flu virus is 85 to 120 nm (nanometers, thousandths of a micrometer) across; we use 100 nm [inv-familiar]. A ribosome, the machine that builds proteins, is about 30 nm across [inv-familiar]. DNA's double helix, its two twisted strands, is about 2 nm wide [inv-familiar].
