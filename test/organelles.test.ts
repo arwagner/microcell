@@ -30,8 +30,14 @@ const DIVEABLE = ["nucleus", "mitochondrion", "rough-er"];
 // placeholder that must be flagged and kept out of the text.
 const UNCONFIRMED_COUNT = ["vesicle", "microtubule"];
 
-interface Sourced {
+// Optional fields because these are read straight from YAML: a missing one should fail an
+// assertion below, not crash the parse.
+interface SourcedSize {
 	value?: number;
+	source?: string;
+}
+
+interface SourcedCountRange {
 	min?: number;
 	max?: number;
 	source?: string;
@@ -43,8 +49,8 @@ interface Organelle {
 	stop: string;
 	parent: string;
 	colour: string;
-	size_nm: Sourced;
-	count: Sourced;
+	size_nm: SourcedSize;
+	count: SourcedCountRange;
 	diveable: boolean;
 	coming_later?: string;
 	uncertain?: string[];
@@ -70,7 +76,7 @@ function headings(file: string): string[] {
 		.flatMap((line) => /^#{1,6}\s+(.+?)\s*$/.exec(line)?.[1] ?? []);
 }
 
-function words(text: string): number {
+function wordsWithoutCitations(text: string): number {
 	return text.split(/\s+/).filter((w) => w !== "" && !/^\[[\w-]+\]+$/.test(w)).length;
 }
 
@@ -79,59 +85,59 @@ const all = ORGANELLES.map(read);
 test("content/organelles holds exactly the twelve organelles", () => {
 	const files = existsSync(join(ROOT, DIR)) ? readdirSync(join(ROOT, DIR)) : [];
 	expect(files.sort()).toEqual(ORGANELLES.map((id) => `${id}.md`).sort());
-	expect(all.map((o) => o.id)).toEqual(ORGANELLES);
+	expect(all.map((organelle) => organelle.id)).toEqual(ORGANELLES);
 });
 
-describe.each(all)("$id", (o) => {
+describe.each(all)("$id", (organelle) => {
 	test("is an organelle at the Cell stop, inside the cell (the nucleolus inside the nucleus)", () => {
-		expect(o.kind).toBe("organelle");
-		expect(o.stop).toBe("Cell");
-		expect(o.parent).toBe(o.id === "nucleolus" ? "nucleus" : "cell");
+		expect(organelle.kind).toBe("organelle");
+		expect(organelle.stop).toBe("Cell");
+		expect(organelle.parent).toBe(organelle.id === "nucleolus" ? "nucleus" : "cell");
 	});
 
 	test("has a real size and a whole-number count range, each citing a listed source", () => {
-		const keys = o.sources.map((s) => s.key);
-		expect(o.size_nm.value).toBeGreaterThan(0);
-		expect(keys).toContain(o.size_nm.source);
-		const { min = 0, max = 0 } = o.count;
+		const keys = organelle.sources.map((s) => s.key);
+		expect(organelle.size_nm.value).toBeGreaterThan(0);
+		expect(keys).toContain(organelle.size_nm.source);
+		const { min = 0, max = 0 } = organelle.count;
 		expect(Number.isInteger(min) && Number.isInteger(max) && min >= 1 && min <= max).toBe(true);
-		expect(keys).toContain(o.count.source);
+		expect(keys).toContain(organelle.count.source);
 	});
 
 	test("cites only research sections that exist", () => {
-		for (const s of o.sources) {
+		for (const s of organelle.sources) {
 			expect(s.url, `[${s.key}] is a research file, not a url`).toBeUndefined();
 			expect(headings(String(s.file)), `[${s.key}] in ${s.file}`).toContain(s.section);
 		}
 	});
 
 	test("has the three explanation layers, in the voice limits", () => {
-		const label = section(o.body, "Label");
+		const label = section(organelle.body, "Label");
 		expect(label).not.toBe("");
 		expect(label).not.toContain("\n");
-		expect(words(label)).toBeLessThanOrEqual(8);
-		expect(words(section(o.body, "Paragraph"))).toBeGreaterThan(0);
-		expect(words(section(o.body, "Paragraph"))).toBeLessThanOrEqual(60);
-		expect(section(o.body, "Go deeper")).not.toBe("");
+		expect(wordsWithoutCitations(label)).toBeLessThanOrEqual(8);
+		expect(wordsWithoutCitations(section(organelle.body, "Paragraph"))).toBeGreaterThan(0);
+		expect(wordsWithoutCitations(section(organelle.body, "Paragraph"))).toBeLessThanOrEqual(60);
+		expect(section(organelle.body, "Go deeper")).not.toBe("");
 	});
 
 	test("is diveable only if it is the nucleus, a mitochondrion or the rough ER; otherwise says what is coming", () => {
-		expect(o.diveable).toBe(DIVEABLE.includes(o.id));
-		if (o.diveable) expect(o.coming_later).toBeUndefined();
-		else expect(o.coming_later?.trim()).toBeTruthy();
+		expect(organelle.diveable).toBe(DIVEABLE.includes(organelle.id));
+		if (organelle.diveable) expect(organelle.coming_later).toBeUndefined();
+		else expect(organelle.coming_later?.trim()).toBeTruthy();
 	});
 
 	test("flags its count as uncertain exactly when research has no measured count, and never states it", () => {
-		const unconfirmed = UNCONFIRMED_COUNT.includes(o.id);
-		expect(o.uncertain ?? []).toEqual(unconfirmed ? ["count"] : []);
+		const unconfirmed = UNCONFIRMED_COUNT.includes(organelle.id);
+		expect(organelle.uncertain ?? []).toEqual(unconfirmed ? ["count"] : []);
 		if (!unconfirmed) return;
-		const prose = `${o.body}\n${o.coming_later ?? ""}`.replace(/,(?=\d{3})/g, "");
-		for (const n of [o.count.min, o.count.max]) expect(prose).not.toMatch(new RegExp(`\\b${n}\\b`));
+		const prose = `${organelle.body}\n${organelle.coming_later ?? ""}`.replace(/,(?=\d{3})/g, "");
+		for (const n of [organelle.count.min, organelle.count.max]) expect(prose).not.toMatch(new RegExp(`\\b${n}\\b`));
 	});
 });
 
 test("every organelle has its own colour", () => {
-	const colours = all.map((o) => o.colour.toLowerCase());
+	const colours = all.map((organelle) => organelle.colour.toLowerCase());
 	for (const c of colours) expect(c).toMatch(/^#[0-9a-f]{6}$/);
 	expect(new Set(colours).size).toBe(colours.length);
 });
