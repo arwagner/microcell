@@ -88,6 +88,31 @@ Priority: **A** = a beginner must meet it; **B** = worth meeting; **C** = "go de
 
 Note on mitochondria: in many living cells they fuse and split, forming branching networks rather than separate beans (Alberts notes new mitochondria arise by growth and fission [S1]). The liver-cell count of ~1,665 is from rat [S15]. Mitochondria take up 22% of a liver cell [S2], far more than in most cells.
 
+### Organelle figures the app uses
+
+The app needs one size and one count range per organelle to lay out the cell. This table picks them from the inventory above. Where the app needs one number from a measured range, the number it uses is marked *(derived)* and the reason given. Where no measured count exists, the count is marked **unconfirmed**: it is a placeholder for drawing only, and the app must not state it as fact.
+
+| Organelle | Size the app uses (what it measures) | Count per cell the app uses | Source |
+|---|---|---|---|
+| Plasma membrane | 5 nm (thickness of the lipid bilayer, rule of thumb; 3.4–4.4 nm by X-ray) | 1 | [S9] |
+| Nucleus | 7,500 nm across *(derived: a sphere of the HeLa nucleus's 220 µm³)* | 1 | [S6] |
+| Nucleolus | 1,000 nm ("a micrometer or more") | 1–10 (usually 1 to a few [S1]; "after mitosis, human nuclei initially contain 10 nucleoli, which later fuse to form fewer larger ones" [S53]) | [S1], [S53] |
+| Rough ER | 25 nm (width of the inside space of one flattened sac, 20–30 nm) *(derived: middle of the range)* | 1 (one connected network) | [S1] |
+| Smooth ER | 45 nm (tube diameter, 30–60 nm) *(derived: middle of the range)* | 1 (part of the same network as the rough ER) | [S1] |
+| Golgi apparatus | 610 nm (one stack; median mini-stack 0.612 µm in human endothelial cells) | 1 (made of several stacks) | [S35] |
+| Mitochondrion | 1,000 nm long (~1 µm in mammalian culture cells; ~0.5 µm wide) | 350–770 *(derived: 0.39 mitochondria per µm³ of HeLa cytoplasm × HeLa cytoplasm of 891–1,973 µm³ through the cell cycle, rounded to the nearest 10)* | [S14], [S52] |
+| Lysosome | 500 nm | 90–190 (COS-7) | [S18], [S17] |
+| Peroxisome | 150 nm (0.1–0.2 µm) *(derived: middle of the range)* | 90–190 (COS-7) | [S19], [S17] |
+| Transport vesicle | 50 nm (rule of thumb; measured 40–80 nm) | 1,000–10,000 **unconfirmed**: a placeholder reading of "many thousands"; no primary per-cell count found | [S20] (size only) |
+| Microtubule | 25 nm (diameter; 24–25 nm) | 250 **unconfirmed**: the number in model-fitted example cells (A-431, U-2 OS, U-251MG) shown in one imaging study, not a measured count | [S28], [S29]; count [S54] |
+| Centrosome | 440 nm (length of one centriole, mean 439 nm; ~200–250 nm wide). The cloud of pericentriolar material around the centrioles is left out: its size is not confirmed | 1–2 (2 just before division) | [S39], [S40] |
+
+Sources added for this table (numbered after the main list):
+
+- **[S52]** Posakony JW, England JM, Attardi G. "Mitochondrial growth and division during the cell cycle in HeLa cells." *J Cell Biol* 1977;74:468, via BioNumbers 109398 (0.39 mitochondria per µm³ of HeLa cytoplasm, p. 485) and 109404 (HeLa cytoplasmic volume 891–1,973 µm³ from 0 to 19 h after mitosis, Table II). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=109398 , https://bionumbers.hms.harvard.edu/bionumber.aspx?id=109404
+- **[S53]** Caragine CM, Haley SC, Zidovska A. "Nucleolar dynamics and interactions with nucleoplasm in living cells." *eLife* 2019;8:e47533, section 2.1 ("After mitosis, human nuclei initially contain 10 nucleoli, which later fuse to form fewer larger ones", citing Savino et al. 2001). https://pmc.ncbi.nlm.nih.gov/articles/PMC6879204/
+- **[S54]** Li J, Shariff A, Wiking M, Lundberg E, Rohde GK, Murphy RF. "Estimating microtubule distributions from 2D immunofluorescence microscopy images reveals differences among human cultured cell lines." *PLoS One* 2012;7:e50292, Fig. 4 (example cells: "Number of microtubules = 250"). https://pmc.ncbi.nlm.nih.gov/articles/PMC3508979/
+
 ---
 
 ## Scale 3: macromolecules and molecular machines
@@ -152,6 +177,21 @@ Ranked by what a textbook-style first tour must show:
 
 ---
 
+## Familiar objects for the scale bar
+
+Sizes for the comparisons the scale bar shows. Where the app needs one number from a measured range, the number it uses is marked *(derived)* and the reason given.
+
+| Object | Measured size | Number the app uses | Source |
+|---|---|---|---|
+| Human scalp hair, width | 60–80 µm ("Scalp hair is a fiber 60 to 80 μm in diameter") | 70 µm *(derived: middle of the range)* | Wolfram 2003 via BioNumbers 114258 [S47] |
+| Human red blood cell, width | 7.7 µm (mean of 8 measurements); about 2 µm thick | 7.7 µm | Cell Size Database via BioNumbers 108239 [S48]; thickness Rosen 1967 via BioNumbers 100799 [S48] |
+| Bacterium (*E. coli*), width | 1.0–1.1 µm for 92% of wild-type cells; length 2.62–4.00 µm across growth conditions | 1 µm (width) | Nelson & Young 2000 via BioNumbers 100002 [S49]; Zaritsky & Woldringh 1978 via BioNumbers 104113 [S50] |
+| Flu (influenza) virus particle | 85–120 nm across, by electron microscopy | 100 nm *(derived: a round figure inside the measured range)* | Roy et al. 2000 via BioNumbers 101585 [S51] |
+| Ribosome | ~30 nm | 30 nm | Alberts 7e [S1] |
+| DNA double helix, width | 20.4 Å (≈2 nm) for B-DNA | 2 nm | Arnott & Hukins 1972 via BioNumbers 105243 [S41] |
+
+---
+
 ## Sources
 
 - **[S1]** Alberts B et al. *Molecular Biology of the Cell*, 7th ed. (W. W. Norton, 2022). Chapter 1 (mitochondrial genome 16,569 bp, 13 proteins); Chapter 2 (70% water; typical animal cell 15 µm; ATP ~2 mM; small organic molecules 100–1000 daltons; glucose 180 daltons); Chapter 12 (~10¹⁰ proteins of ~10,000 kinds; organelle descriptions; ER cisternae 20–30 nm, smooth ER tubules 30–60 nm; condensates ~50 nm to ≥1 µm; nucleolus; NPC 125 MDa, ~40 nm internal diameter, 500–1000 proteins; ribosomes ~30 nm; ~5 nm / 40 kDa passive-diffusion limit). Online sample chapters: https://nerd.wwnorton.com/ebooks/epub/mboc7/EPUB/content/4.3.1-chapter12.xhtml (and sibling files 1.1.x-chapter01, 1.2.x-chapter02, 4.3.x-chapter12).
@@ -198,5 +238,10 @@ Ranked by what a textbook-style first tour must show:
 - **[S44]** Fahimi P, Matta CF. "On the power per mitochondrion and the number of associated active ATP synthases." *Phys Biol* 2021;18(4), Table 4, via BioNumbers 117334–117336 (~100 in *Amoeba proteus* to 1,000–5,000 in *Ochromonas*). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=117334
 - **[S45]** Gerich JE, *Baillieres Clin Endocrinol Metab* 1993;7:551, and Nuttall FQ et al., *Diabetes Metab Res Rev* 2008;24:438, via BioNumbers 110776 (human plasma glucose ~3 mM after prolonged fasting to ~9 mM after meals). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=110776
 - **[S46]** John SA, Ottolia M, Weiss JN, Ribalet B. "Dynamic modulation of intracellular glucose imaged in single cells using a FRET-based glucose nanosensor." *Pflugers Arch* 2008;456:307 ("intracellular glucose level typically reaches 0.5–1 mM when extracellular glucose is 10 mM" in high-uptake cells; below the 0.07 mM detection limit in slow-uptake cells). https://pmc.ncbi.nlm.nih.gov/articles/PMC4339035/
+- **[S47]** Wolfram LJ. "Human hair: a unique physicochemical composite." *J Am Acad Dermatol* 2003, via BioNumbers 114258 (scalp hair 60–80 µm in diameter). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=114258
+- **[S48]** Gregory TR, Cell Size Database (2001–2005), via BioNumbers 108239 (human red blood cell diameter 7.7 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=108239 ; Rosen R, *Optimality Principles in Biology* (Plenum, 1967) p. 56, via BioNumbers 100799 (red blood cell thickness 2 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=100799
+- **[S49]** Nelson DE, Young KD. "Penicillin binding protein 5 affects cell diameter, contour, and morphology of *Escherichia coli*." *J Bacteriol* 2000;182:1714, via BioNumbers 100002 (diameters of 92% of wild-type cells between 1.0 and 1.1 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=100002
+- **[S50]** Zaritsky A, Woldringh CL. "Chromosome replication rate and cell shape in *Escherichia coli*: lack of coupling." *J Bacteriol* 1978;135:581, Table 1, via BioNumbers 104113 (diameter 0.68–1.04 µm, length 2.62–4.00 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104113
+- **[S51]** Roy AM, Parker JS, Parrish CR, Whittaker GR. "Early stages of influenza virus entry into Mv-1 lung cells: involvement of dynamin." *Virology* 2000;267:17, p. 19, via BioNumbers 101585 (influenza virions 85–120 nm by negative-stain electron microscopy). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=101585
 
 Not used: NCBI Bookshelf's free Alberts 4th edition blocked automated access (captcha), so the 5th/7th-edition copies above were used instead.
