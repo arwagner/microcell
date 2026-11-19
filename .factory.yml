@@ -1,0 +1,13 @@
+schemaVersion: 1
+checks:
+  - npm ci
+  - npm run typecheck
+  - npm run lint
+  - npm test
+  - npm run build
+agent: claude
+tasks:
+  explore: {}
+  implement: {}
+  implement-spec: {}
+  review: {}
