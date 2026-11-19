@@ -1,0 +1,23 @@
+[
+	{
+		"id": "pdb-5flm",
+		"source": "https://www.rcsb.org/structure/5FLM",
+		"license": "CC0 1.0",
+		"credit": "RNA polymerase II: PDB 5FLM, Bernecky, C., Herzog, F., Baumeister, W., Plitzko, J.M., Cramer, P. (2016) Structure of transcribing mammalian RNA polymerase II. Nature, doi:10.1038/nature16482. Data from the RCSB Protein Data Bank (rcsb.org).",
+		"use": "courtesy"
+	},
+	{
+		"id": "pdb-4v6x",
+		"source": "https://www.rcsb.org/structure/4V6X",
+		"license": "CC0 1.0",
+		"credit": "80S ribosome: PDB 4V6X, Anger, A.M., Armache, J.-P., Berninghausen, O., Habeck, M., Subklewe, M., Wilson, D.N., Beckmann, R. (2013) Structures of the human and Drosophila 80S ribosome. Nature, doi:10.1038/nature12104. Data from the RCSB Protein Data Bank (rcsb.org).",
+		"use": "courtesy"
+	},
+	{
+		"id": "pdb-8h9s",
+		"source": "https://www.rcsb.org/structure/8H9S",
+		"license": "CC0 1.0",
+		"credit": "ATP synthase: PDB 8H9S, Lai, Y., Zhang, Y., Liu, F., Gao, Y., Gong, H., Rao, Z. (2023) Structure of the human ATP synthase. Molecular Cell, doi:10.1016/j.molcel.2023.04.029. Data from the RCSB Protein Data Bank (rcsb.org).",
+		"use": "courtesy"
+	}
+]
