@@ -22,8 +22,6 @@ export type Kind = (typeof KINDS)[number];
 // (`## Label`, `## Paragraph`, `## Go deeper`). The rest are exempt: a guided descent speaks through
 // its beats, a page is free reading, and the comparisons list labels each item by name.
 export const LAYERED_KINDS = ["cell", "organelle", "site", "machine", "part", "process", "cytoplasm"] as const;
-export type LayeredKind = (typeof LAYERED_KINDS)[number];
-export type UnlayeredKind = Exclude<Kind, LayeredKind>;
 
 // Kinds that sit in the place tree (cell → organelle → site → machine → part) and so carry a stop
 // and a parent. A process spans stops (each step names its own), so it is not placed in the tree.
