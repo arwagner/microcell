@@ -33,9 +33,9 @@ A gene copied, then built into a protein
 In the nucleus, your cell copies one gene from DNA into messenger RNA (mRNA), a working copy. The mRNA leaves through a nuclear pore, a gateway in the nucleus's wall. Out on the rough ER, a ribosome reads it and strings amino acids, protein building blocks, into a protein [proc][inv].
 
 ## Go deeper
-A mammalian ribosome adds about 6 amino acids per second; measured in mouse stem cells, it is 5.6 [proc]. At that pace, one ribosome takes roughly 70 seconds to make a protein 400 amino acids long [proc]. Many ribosomes read the same mRNA at once, spaced along it like beads [proc].
+Measured in mouse stem cells, a ribosome adds about 6 amino acids per second (5.6) [proc]. At that pace, one ribosome takes roughly 70 seconds to make a protein 400 amino acids long [proc]. Many ribosomes read the same mRNA at once, spaced along it like beads [proc].
 
-Copying the gene is faster: RNA polymerase II adds roughly 20 to 100 RNA letters (nucleotides) per second [proc]. What you see is slowed down.
+For the copying step, RNA polymerase II adds roughly 20 to 100 RNA letters (nucleotides) per second [proc]. What you see is slowed down.
 
 ## Steps
 1. At the transcription site, RNA polymerase II copies a gene from DNA into RNA. The RNA gets a protective cap and tail and loses the stretches that don't code for protein, which makes it finished mRNA [proc].

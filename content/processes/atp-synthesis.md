@@ -29,7 +29,7 @@ Your mitochondria pile up protons (hydrogen ions) on one side of their inner mem
 ## Go deeper
 In mammals like you, the rotor's ring has 8 pieces, so 8 protons pass for each turn: about 2.7 protons for every ATP [proc].
 
-Nobody has timed this motor inside a human cell. It makes more than 100 ATP per second, so it turns more than about 33 times a second; the honest range is tens to a few hundred turns per second [proc]. What you see is slowed down a lot.
+Nobody has timed this motor inside a human cell. Studies of the enzyme find it makes more than 100 ATP per second, so it turns more than about 33 times a second; the honest range is tens to a few hundred turns per second [proc]. What you see is slowed down a lot.
 
 ## Steps
 1. Protein complexes in the inner membrane use energy from your food to pump protons to one side, so they pile up there [proc].
