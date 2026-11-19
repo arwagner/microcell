@@ -33,4 +33,4 @@ This is a transport vesicle, a tiny bubble of membrane about 50 nanometers (nm) 
 ## Go deeper
 Measured vesicles are 40 to 80 nm across, with an average near 45 nm [inv].
 
-Nobody we could find has counted how many vesicles one human cell holds at a time, so this app does not give a number. How many you see here is a guess, made only so the picture looks busy.
+How many vesicles one human cell holds at a time has not been counted in the sources this app uses, so it does not give a number. How many you see here is a guess, made only so the picture looks busy.
