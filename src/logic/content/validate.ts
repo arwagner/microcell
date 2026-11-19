@@ -1,5 +1,5 @@
 import { ContentError, parseContent } from "./parse";
-import type { ContentRecord, Kind, PlacedKind, Rate, Source } from "./types";
+import { type ContentRecord, type Kind, PLACED_KINDS, type PlacedKind, type Rate, type Source } from "./types";
 
 /** Every content record, checked as a whole, with a lookup by id. */
 export interface ContentSet {
@@ -25,7 +25,7 @@ const PARENT_KIND: Record<Exclude<PlacedKind, "cell">, Kind> = {
 // The one exception to the tree: the nucleolus sits inside the nucleus, so its parent is an organelle.
 const NESTED_ORGANELLES: Readonly<Record<string, string>> = { nucleolus: "nucleus" };
 
-const PLACED: ReadonlySet<Kind> = new Set<Kind>(["cell", "organelle", "site", "machine", "part", "cytoplasm"]);
+const PLACED: ReadonlySet<Kind> = new Set<Kind>(PLACED_KINDS);
 
 /** Parses every file, then validates the set. Throws a ContentError naming the file and field. */
 export function loadContent(files: readonly ContentFile[]): ContentSet {
