@@ -3,9 +3,10 @@ import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { parse as parseYaml } from "yaml";
 
-// The content loader checks the shape of each file and that every number is cited. What it can't
-// know is the inventory this ticket fixes: which twelve organelles exist, which three can be dived
-// into, and that figures research/ marks unconfirmed are never told to the learner as fact.
+// The all-content checks (the parser and the citation-key test) belong to the content tickets this
+// one depends on. This file pins what only this ticket fixes: which twelve organelles exist, which
+// three can be dived into, and that figures research/ marks unconfirmed are never told to the
+// learner as fact.
 
 const ROOT = join(import.meta.dirname, "..");
 const DIR = "content/organelles";
