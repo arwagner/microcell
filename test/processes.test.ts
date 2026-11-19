@@ -1,16 +1,13 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import {
 	type ContentRecord,
 	loadContent,
 	type ProcessRecord,
-	type SiteRecord,
 	type Stop,
 	sentences,
 	slowedFactor,
 } from "../src/logic/content";
-import { contentFiles, ROOT } from "./content-on-disk";
+import { contentFiles, headings, MARKER, readRepoFile, words } from "./content-on-disk";
 
 // The loader checks that each step's machine exists and that the rates compare. What it can't know
 // is what this ticket fixes: exactly two processes, their steps in order and where each plays, which
@@ -26,23 +23,24 @@ const get = (id: string): ContentRecord => {
 	return r;
 };
 
-// Each step as [stop, machine], in order.
-const STEPS: Record<string, [Stop, string][]> = {
+// Each step as [stop, machine, the focus it plays at], in order. The ticket names the steps but not
+// their tuples, which repeat, so each row says which named step it is.
+const STEPS: Record<string, [Stop, string, string][]> = {
 	"atp-synthesis": [
-		["Machinery", "atp-synthase"], // the proton gradient across the crista
-		["Molecule", "atp-synthase"], // protons through the c-ring
-		["Molecule", "atp-synthase"], // the central stalk turns
-		["Molecule", "atp-synthase"], // F1 makes ATP
-		["Molecule", "atp-synthase"], // 3 ATP per turn
+		["Machinery", "atp-synthase", "crista"], // the proton gradient
+		["Molecule", "atp-synthase", "atp-synthase"], // protons through the c-ring
+		["Molecule", "atp-synthase", "atp-synthase"], // the stalk turns
+		["Molecule", "atp-synthase", "atp-synthase"], // F1 makes ATP
+		["Molecule", "atp-synthase", "atp-synthase"], // 3 ATP per turn
 	],
 	"making-a-protein": [
-		["Machinery", "rna-polymerase-ii"], // transcription, a short lead-in
-		["Organelle", "rna-polymerase-ii"], // the mRNA leaves through a nuclear pore
-		["Machinery", "ribosome"], // arriving at the rough ER surface
-		["Molecule", "ribosome"], // translation starts
-		["Molecule", "ribosome"], // one codon at a time
-		["Molecule", "ribosome"], // a stop codon ends it
-		["Molecule", "ribosome"], // the chain folds
+		["Machinery", "rna-polymerase-ii", "transcription-site"], // transcription, a short lead-in
+		["Organelle", "rna-polymerase-ii", "nucleus"], // the mRNA leaves through a nuclear pore
+		["Machinery", "ribosome", "rough-er-surface"], // translation in full: arriving
+		["Molecule", "ribosome", "ribosome"], // translation starts
+		["Molecule", "ribosome", "ribosome"], // one codon at a time
+		["Molecule", "ribosome", "ribosome"], // a stop codon ends it
+		["Molecule", "ribosome", "ribosome"], // the chain folds
 	],
 };
 
@@ -63,7 +61,8 @@ function stepFocus(stop: Stop, machineId: string): ContentRecord {
 	if (stop === "Molecule") return machine;
 	const site = get(machine.parent);
 	if (stop === "Machinery") return site;
-	const organelle = get((site as SiteRecord).parent);
+	if (site.kind !== "site") throw new Error(`${machine.parent} is not a site`);
+	const organelle = get(site.parent);
 	return stop === "Organelle" ? organelle : get("cell");
 }
 
@@ -72,14 +71,10 @@ function stepTexts(p: ProcessRecord): string[] {
 	return (p.sections.Steps ?? "").split(/\r?\n/).flatMap((line) => /^\d+\.\s+(.+)$/.exec(line)?.[1] ?? []);
 }
 
-function headings(file: string): string[] {
-	return readFileSync(join(ROOT, file), "utf8")
-		.split(/\r?\n/)
-		.flatMap((line) => /^#{1,6}\s+(.+?)\s*$/.exec(line)?.[1] ?? []);
-}
-
-const MARKER = /\[[\w-]+\](?!\()/g;
-const words = (text: string) => text.replace(MARKER, "").split(/\s+/).filter(Boolean).length;
+// Whitespace and Markdown emphasis folded away, so a reflowed or re-bolded research file still matches.
+const plain = (text: string) => text.replace(/[*_]/g, "").replace(/\s+/g, " ");
+const research = plain(readRepoFile("research/processes.md"));
+const cited = (sentence: string) => [...sentence.matchAll(MARKER)].length > 0;
 
 test("content holds exactly the two processes", () => {
 	expect(processes.map((p) => p.file).sort()).toEqual([
@@ -91,7 +86,7 @@ test("content holds exactly the two processes", () => {
 
 describe.each(processes)("process $id", (p) => {
 	test("has its steps in order, each at its stop with a machine that resolves", () => {
-		expect(p.steps.map((s) => [s.stop, s.machine])).toEqual(STEPS[p.id]);
+		expect(p.steps.map((s) => [s.stop, s.machine])).toEqual(STEPS[p.id]?.map(([stop, machine]) => [stop, machine]));
 		for (const s of p.steps) expect(get(s.machine).kind).toBe("machine");
 	});
 
@@ -105,11 +100,10 @@ describe.each(processes)("process $id", (p) => {
 		expect(n).toBeGreaterThan(1);
 	});
 
-	test("cites its real rate to a research section that exists", () => {
+	test("cites its real rate to a declared source", () => {
 		const source = p.sources.find((s) => s.key === p.realRate.source);
 		expect(source, `real_rate.source "${p.realRate.source}"`).toBeDefined();
-		if (source && "file" in source) expect(headings(source.file)).toContain(source.section);
-		else expect(source?.url).toMatch(/^https:\/\//);
+		if (source && !("file" in source)) expect(source.url).toMatch(/^https:\/\//);
 	});
 
 	test("cites only research sections that exist", () => {
@@ -126,35 +120,24 @@ describe.each(processes)("process $id", (p) => {
 	// The loader only insists on a citation where there is a number; every step is a factual claim.
 	test("cites every step", () => {
 		for (const step of stepTexts(p)) {
-			for (const s of sentences(step).slice(-1)) expect(s, step).toMatch(MARKER);
+			expect(cited(sentences(step).at(-1) ?? ""), step).toBe(true);
 		}
 	});
 });
 
 test("each step plays inside its machine's own branch of the cell", () => {
-	const where = (id: string) => (STEPS[id] ?? []).map(([stop, machine]) => `${stop}: ${stepFocus(stop, machine).id}`);
-	expect(where("atp-synthesis")).toEqual([
-		"Machinery: crista",
-		"Molecule: atp-synthase",
-		"Molecule: atp-synthase",
-		"Molecule: atp-synthase",
-		"Molecule: atp-synthase",
-	]);
-	expect(where("making-a-protein")).toEqual([
-		"Machinery: transcription-site",
-		"Organelle: nucleus",
-		"Machinery: rough-er-surface",
-		"Molecule: ribosome",
-		"Molecule: ribosome",
-		"Molecule: ribosome",
-		"Molecule: ribosome",
-	]);
+	for (const steps of Object.values(STEPS)) {
+		expect(steps.map(([stop, machine]) => stepFocus(stop, machine).id)).toEqual(steps.map(([, , focus]) => focus));
+	}
 });
 
 test("every site names its process, and it resolves", () => {
 	const sites = byKind("site");
 	expect(Object.fromEntries(sites.map((s) => [s.id, s.process]))).toEqual(SITE_PROCESS);
-	for (const s of sites) expect(get(String(s.process)).kind).toBe("process");
+	for (const s of sites) {
+		expect(s.process, s.id).toBeDefined();
+		if (s.process) expect(get(s.process).kind).toBe("process");
+	}
 });
 
 // The real ATP synthase rate is a range nobody has measured in human cells, so real_rate holds the
@@ -163,13 +146,12 @@ test("ATP synthesis states its real rate as the honest range", () => {
 	const atp = processes.find((p) => p.id === "atp-synthesis");
 	expect(atp?.realRate).toEqual({ value: 33, unit: "turns/s", source: "proc" });
 	expect(atp?.layers.goDeeper).toContain("tens to a few hundred turns per second");
-	const research = readFileSync(join(ROOT, "research/processes.md"), "utf8");
-	expect(research).toContain("**tens to a few hundred turns per second**");
+	expect(research).toContain("tens to a few hundred turns per second");
 	expect(research).toContain("more than ~33 rev/s");
 });
 
 test("making a protein runs at translation's measured rate", () => {
 	const protein = processes.find((p) => p.id === "making-a-protein");
 	expect(protein?.realRate).toEqual({ value: 5.6, unit: "amino acids/s", source: "proc" });
-	expect(readFileSync(join(ROOT, "research/processes.md"), "utf8")).toContain("(5.6 aa/s)");
+	expect(research).toContain("(5.6 aa/s)");
 });
