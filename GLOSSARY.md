@@ -70,7 +70,7 @@ _Avoid_: reference object, benchmark, landmark
 
 **Content file**:
 One Markdown file in `content/` about one thing (or, for Comparisons, one list of them): YAML frontmatter holds its facts and sources, and the body holds its explanation layers. Its kind is one of `cell`, `organelle`, `site`, `machine`, `part`, `process`, `descent` (a Guided descent), `page`, `cytoplasm` (the Cytoplasm filler) or `comparisons`.
-_Avoid_: data file, entry, record
+_Avoid_: data file, entry
 
 **Asset manifest**:
 The list in `assets/manifest.json` of every outside file the app uses, such as a protein structure, each with its source, license, credit line, and whether credit is required or a courtesy.
