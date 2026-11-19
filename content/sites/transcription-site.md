@@ -5,6 +5,7 @@ name: Transcription site
 stop: Machinery
 parent: nucleus
 machine: rna-polymerase-ii
+process: making-a-protein
 sources:
   - key: proc
     file: research/processes.md

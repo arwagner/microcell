@@ -5,6 +5,7 @@ name: Rough ER surface
 stop: Machinery
 parent: rough-er
 machine: ribosome
+process: making-a-protein
 sources:
   - key: inv
     file: research/cell-inventory.md

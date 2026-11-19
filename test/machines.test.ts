@@ -123,11 +123,6 @@ describe.each(sites)("site $id", (s) => {
 	test("is a site at the Machinery stop, inside its organelle, naming its machine", () => {
 		expect([s.kind, s.stop, s.parent, s.machine]).toEqual(["site", "Machinery", want.parent, want.machine]);
 	});
-
-	// The process files, and each site's link to one, come in a later ticket.
-	test("does not name a process yet", () => {
-		expect(s.process).toBeUndefined();
-	});
 });
 
 describe.each(machines)("machine $id", (m) => {

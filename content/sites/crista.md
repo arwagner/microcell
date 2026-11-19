@@ -5,6 +5,7 @@ name: Mitochondrial crista
 stop: Machinery
 parent: mitochondrion
 machine: atp-synthase
+process: atp-synthesis
 sources:
   - key: inv
     file: research/cell-inventory.md
