@@ -26,6 +26,11 @@ export class ManifestError extends Error {
 	}
 }
 
+// A blank string counts as missing: a credit line of spaces is no credit at all.
+function isFilled(value: unknown): value is string {
+	return typeof value === "string" && value.trim() !== "";
+}
+
 function isWebUrl(text: string): boolean {
 	try {
 		const url = new URL(text);
@@ -37,8 +42,7 @@ function isWebUrl(text: string): boolean {
 
 // Name an entry by its position and, when it has one, its id, so a message points at the right line.
 function label(index: number, raw: Record<string, unknown>): string {
-	const id = raw.id;
-	return typeof id === "string" && id.trim() !== "" ? `entry ${index} ("${id}")` : `entry ${index}`;
+	return isFilled(raw.id) ? `entry ${index} ("${raw.id}")` : `entry ${index}`;
 }
 
 /**
@@ -60,20 +64,20 @@ export function parseManifest(data: unknown): AssetEntry[] {
 
 		for (const field of STRING_FIELDS) {
 			const value = raw[field];
-			if (value === undefined || (typeof value === "string" && value.trim() === "")) {
-				problems.push(`${where}: field "${field}" is missing`);
-			} else if (typeof value !== "string") {
+			if (value !== undefined && typeof value !== "string") {
 				problems.push(`${where}: field "${field}" must be a string`);
+			} else if (!isFilled(value)) {
+				problems.push(`${where}: field "${field}" is missing`);
 			}
 		}
 
-		if (typeof raw.source === "string" && raw.source.trim() !== "" && !isWebUrl(raw.source)) {
+		if (isFilled(raw.source) && !isWebUrl(raw.source)) {
 			problems.push(`${where}: field "source" is not an http(s) URL: "${raw.source}"`);
 		}
-		if (typeof raw.use === "string" && raw.use.trim() !== "" && !USES.includes(raw.use)) {
+		if (isFilled(raw.use) && !USES.includes(raw.use)) {
 			problems.push(`${where}: field "use" must be "required" or "courtesy", not "${raw.use}"`);
 		}
-		if (typeof raw.id === "string" && raw.id.trim() !== "") {
+		if (isFilled(raw.id)) {
 			const first = firstIndexOfId.get(raw.id);
 			if (first === undefined) firstIndexOfId.set(raw.id, index);
 			else problems.push(`${where}: field "id" is a duplicate of entry ${first}`);
