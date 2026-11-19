@@ -104,9 +104,14 @@ describe.each(all)("$id", (organelle) => {
 		expect(keys).toContain(organelle.count.source);
 	});
 
-	test("cites only research sections that exist", () => {
+	// The ticket accepts a research/ section or a primary URL; either way a reviewer must be able to follow it.
+	test("cites research sections that exist, or a primary URL", () => {
 		for (const s of organelle.sources) {
-			expect(s.url, `[${s.key}] is a research file, not a url`).toBeUndefined();
+			if (s.url !== undefined) {
+				expect(s.file, `[${s.key}] is a url or a research file, not both`).toBeUndefined();
+				expect(s.url, `[${s.key}]`).toMatch(/^https:\/\//);
+				continue;
+			}
 			expect(headings(String(s.file)), `[${s.key}] in ${s.file}`).toContain(s.section);
 		}
 	});
