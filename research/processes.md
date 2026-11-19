@@ -74,7 +74,7 @@ ATP synthase (F₀ c-ring, γ stalk, F₁ knob of α₃β₃, a stator arm holdi
 
 ### Speeds
 
-- **Rotation:** about 100–650 revolutions per second in biology [11]; isolated enzyme Vmax ~230 rev/s for *E. coli* at 25 °C and ~350 rev/s at 37 °C [12].
+- **Rotation:** the fastest directly measured rate is for the bacterial enzyme running in reverse (burning ATP) in single-molecule experiments: Vmax ~230 rev/s at 25 °C, ~350 rev/s at 37 °C and ~650 rev/s at 45 °C, for FoF1 from the heat-loving bacterium *Bacillus* PS3 [11][12]. There is no direct measurement in human mitochondria. At >100 ATP per second [13] and 3 ATP per turn, that is more than ~33 rev/s. The honest range for the app is **tens to a few hundred turns per second**.
 - **Output:** over 100 ATP per second per enzyme [13].
 - **For context:** a mammalian cell uses about 10⁹ ATP per second [14].
 
@@ -84,7 +84,7 @@ Molecular, inside an organelle (mitochondrion). It pairs naturally with a zoom f
 
 ### How it reads as motion
 
-**Excellent, the best "wow" of the set.** It is a true rotary motor; the spinning is literally how it works, not an artist's metaphor, and it was filmed directly with attached fluorescent filaments [8][9]. It loops by nature, so it can play forever at a stop. The real rate (hundreds of turns per second) must be shown heavily slowed, and the app should say so. Risk: the upstream electron transport chain is complicated; keep it as "something pumps protons up" and push detail into deeper layers.
+**Excellent, the best "wow" of the set.** It is a true rotary motor; the spinning is literally how it works, not an artist's metaphor, and it was filmed directly with attached fluorescent filaments [8][9]. It loops by nature, so it can play forever at a stop. The real rate (tens to hundreds of turns per second) must be shown heavily slowed, and the app should say so. Risk: the upstream electron transport chain is complicated; keep it as "something pumps protons up" and push detail into deeper layers.
 
 ---
 
@@ -96,7 +96,7 @@ Molecular, inside an organelle (mitochondrion). It pairs naturally with a zoom f
 
 | Kind | Example | How it works | Speed |
 |---|---|---|---|
-| **Channel** (open door) | Potassium channel, aquaporin (water) | A pore that, when open, lets the right ion or water rush through downhill | up to ~10⁸ ions/s [15]; aquaporin ~10⁹ water molecules/s [16] |
+| **Channel** (open door) | Potassium channel, aquaporin (water) | A pore that, when open, lets the right ion or water rush through downhill | 10⁶–10⁸ ions/s, typically ~10⁷ [15]; aquaporin-1 ~2 × 10⁹ water molecules/s per pore (each aquaporin has four pores) [16] |
 | **Transporter** (revolving door) | Glucose transporter | Binds the molecule, changes shape, releases it on the other side | in between (much slower than channels) [15] |
 | **Pump** (powered door) | Sodium-potassium pump | Burns one ATP to push 3 Na⁺ out and 2 K⁺ in, against the gradient | a few hundred cycles/s (~450/s cited for mammalian) [17][18] |
 
@@ -154,7 +154,7 @@ Organelle scale (ER, Golgi, membrane) with a molecular detail (kinesin walking).
 
 ### Speeds
 
-Mitosis takes roughly 20–60 minutes in human cells (HeLa average ~46 min) [26], inside a cell cycle of ~24 hours [1].
+Mitosis takes roughly 20–60 minutes in human cells: 19 ± 3 min in normal human RPE-1 cells and 46 ± 19 min in HeLa cancer cells [26], inside a cell cycle of ~24 hours [1].
 
 ### Scale
 
@@ -178,7 +178,7 @@ Whole-cell. It changes the whole scene: the nucleus disappears and the cell beco
 
 ## Recommendation for v1
 
-1. **ATP synthase in a mitochondrion.** The best value for effort. One machine, one looping motion, and the motion *is* the mechanism, so the animation is honest. Clean zoom path: cell → mitochondrion → inner membrane → motor. Real numbers make good "go deeper" content (3 ATP per turn, 8 protons per turn, hundreds of turns per second).
+1. **ATP synthase in a mitochondrion.** The best value for effort. One machine, one looping motion, and the motion *is* the mechanism, so the animation is honest. Clean zoom path: cell → mitochondrion → inner membrane → motor. Real numbers make good "go deeper" content (3 ATP per turn, 8 protons per turn, up to hundreds of turns per second).
 2. **Making a protein (transcription → translation).** The central story of molecular biology and the best use of zooming: it starts at the nucleus and ends at a ribosome. Its product links to everything else. If effort must be cut, show translation in full and transcription/export as a shorter lead-in.
 3. **Optional third: vesicle trafficking (kinesin carrying a vesicle).** Ties organelles together and kinesin walking is very appealing. It is the costliest of the three, so make it the one to drop if scope is tight. If a cheaper third is wanted, the **sodium-potassium pump** is a small, loopable stand-in, though it partly repeats the ATP synthase "membrane machine" idea.
 
@@ -205,25 +205,25 @@ Whole-cell. It changes the whole scene: the nucleus disappears and the cell beco
 8. Noji H, Yasuda R, Yoshida M, Kinosita K. "Direct observation of the rotation of F1-ATPase." *Nature* 386:299–302 (1997). https://doi.org/10.1038/386299a0
 9. Yasuda R et al. "Resolution of distinct rotational substeps by submillisecond kinetic analysis of F1-ATPase." *Nature* 410:898–904 (2001) (120° steps, one ATP per step). https://doi.org/10.1038/35073513
 10. Watt IN, Montgomery MG, Runswick MJ, Leslie AGW, Walker JE. "Bioenergetic cost of making an adenosine triphosphate molecule in animal mitochondria." *PNAS* 107:16823–16827 (2010) (bovine c8 ring, 8 H⁺/turn, 2.7 H⁺/ATP). https://pmc.ncbi.nlm.nih.gov/articles/PMC2947889/
-11. "Rotational dynamics of ATP synthase: mechanical constraints and energy dissipative channels." *Pure Appl. Chem.* (2025) (biological rotation ~100–650 rps). https://doi.org/10.1515/pac-2025-0477
-12. BioNumbers: maximal rotation rate of ATP synthase, ~350 rev/s at 37 °C (BNID 104890); ~230 rev/s *E. coli* at 25 °C (BNID 104894). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104890
-13. BioNumbers: synthesis rate of ATP by F₀F₁ ATP synthase, >100 ATP/s (BNID 111975). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=111975
+11. Ueno H, Suzuki T, Kinosita K Jr, Yoshida M. "ATP-driven stepwise rotation of FoF1-ATP synthase." *PNAS* 102:1333–1338 (2005) (thermophilic *Bacillus* PS3 FoF1 expressed in *E. coli*; Vmax ~350 rps at 37 °C in the abstract; ~230 and ~650 rps at 25 °C and 45 °C in the Discussion). https://pmc.ncbi.nlm.nih.gov/articles/PMC545493/
+12. BioNumbers: maximal rotation rate of ATP synthase, ~350 rev/s at 37 °C (BNID 104890); ~230 rev/s at 25 °C (BNID 104894); both from [11]. BioNumbers labels the organism *E. coli*, but that is only the host strain; the enzyme is from *Bacillus* PS3. https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104890
+13. BioNumbers: synthesis rate of ATP by F₀F₁ ATP synthase, >100 ATP/s (BNID 111975; from Senior AE, *Cell* 130:220 (2007)). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=111975
 14. Milo R, Phillips R. *Cell Biology by the Numbers*, "What is the power consumption of a cell?" (~10⁹ ATP/s per mammalian cell). http://book.bionumbers.org/what-is-the-power-consumption-of-a-cell/
-15. Lodish H et al. *Molecular Cell Biology*, 8th ed., §11.4 "Three main classes of membrane proteins transport molecules and ions" (channels up to 10⁸ ions/s; transporters and pumps far slower). https://digfir-published.macmillanusa.com/lodish8e/lodish8e_ch11_4.html
-16. Neuroscience Online / Stony Brook "Membrane Transport" (water channels up to ~2×10⁹ molecules/s). https://neurotext.library.stonybrook.edu/C1/C1_5/C1_5.html
+15. Gennis RB. *Biomembranes: Molecular Structure and Function* (Springer, 1989), pp. 273–275, Table 8.3 ("An ion channel in its open configuration typically can allow the passage of 10^6-10^8 ions/sec"; lactose permease only ~30/s), via BioNumbers BNID 103163. https://bionumbers.hms.harvard.edu/bionumber.aspx?id=103163 ; Milo R, Phillips R. *Cell Biology by the Numbers*, "How many ions pass through an ion channel per second?" (~1 pA ≈ 10⁷ ions/s). http://book.bionumbers.org/how-many-ions-pass-through-an-ion-channel-per-second/
+16. Agre P et al. "Aquaporin water channels: from atomic structure to clinical medicine." *J Physiol* 542:3–16 (2002) (unit permeability "∼2 × 10⁹ water molecules per subunit per second", from Zeidel et al. 1992, 1994). https://pmc.ncbi.nlm.nih.gov/articles/PMC2290382/ . BioNumbers BNID 100479 gives an older textbook figure of 5 × 10⁸/s (Lehninger, 3rd ed.).
 17. BioNumbers: rate of transport of Na⁺/K⁺ ATPase, ~450/s (BNID 103161). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=103161
 18. PDB-101 Molecule of the Month: Sodium-Potassium Pump (#118). https://pdb101.rcsb.org/motm/118
 19. BioNumbers: clathrin-coated pit mean lifetime ~40 s in BSC-1 cells (BNID 112147; BNID 112142). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=112147
 20. Milo R, Phillips R. *Cell Biology by the Numbers*, "How fast do molecular motors move on cytoskeletal filaments?" (kinesin 8 nm steps, 1 ATP/step, ~800 nm/s in vitro, ~2000 nm/s in vivo). http://book.bionumbers.org/how-fast-do-molecular-motors-move-on-cytoskeletal-filaments/
 21. PDB-101 Molecule of the Month: Kinesin (#64). https://pdb101.rcsb.org/motm/64
 22. Hirschberg K et al. "Kinetic analysis of secretory protein traffic and characterization of Golgi to plasma membrane transport intermediates in living cells." *J Cell Biol* 143:1485 (1998) (ER→Golgi rate constant ~2.8%/min for VSVG-GFP). https://pmc.ncbi.nlm.nih.gov/articles/PMC2132993/
-23. Betterton MD, McIntosh JR. "Regulation of chromosome speeds in mitosis." *Cell Mol Bioeng* (2013) (typical ~1 µm/min). https://pmc.ncbi.nlm.nih.gov/articles/PMC4578309/
-24. Maiato H, Lince-Faria M. "The perpetual movements of anaphase." *Cell Mol Life Sci* (2010) (0.2–5 µm/min). https://pmc.ncbi.nlm.nih.gov/articles/PMC11115923/
+23. Betterton MD, McIntosh JR. "Regulation of chromosome speeds in mitosis." *Cell Mol Bioeng* 6:418–430 (2013) ("Chromosome motion in anaphase is usually at ~1 µm/min (~16 nm/sec), though some cells beat this by as much as a factor of 5"). https://pmc.ncbi.nlm.nih.gov/articles/PMC4578309/
+24. Maiato H, Lince-Faria M. "The perpetual movements of anaphase." *Cell Mol Life Sci* 67:2251–2269 (2010) (anaphase speed "varies from 0.2 to 5 μm/min"). https://pmc.ncbi.nlm.nih.gov/articles/PMC11115923/
 25. BioNumbers: time from anaphase initiation to cytokinesis, ~10 ± 2 min in HeLa (BNID 102581). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=102581
-26. Human-cell mitosis timing compilation (HeLa 46 ± 19 min in mitosis). https://core.ac.uk/download/4167111.pdf
+26. Yang Z, Lončarek J, Khodjakov A, Rieder CL. "Extra centrosomes and/or chromosomes prolong mitosis in human cells." *Nat Cell Biol* 10:748–751 (2008) (HeLa 46 ± 19 min, n = 200; RPE-1 19 ± 3 min). https://pmc.ncbi.nlm.nih.gov/articles/PMC2430725/ . Cross-checks: BioNumbers BNID 109226 (HeLa M phase ~50 min; Hahn AT et al., *Cell Cycle* 8:1044 (2009)); BNID 112373 ("Mitosis typically is completed in 30-60 min").
 
 ### Caveats on sourcing
 
 - NCBI Bookshelf pages blocked automated fetches during this research, so Alberts [1] is cited at chapter level from the standard textbook account rather than quoted line by line. Every numeric claim instead rests on BioNumbers, *Cell Biology by the Numbers*, or a primary paper.
-- Sources [22]–[24] were checked by title/author via Europe PMC; source [26] and the figures from [11], [15], [16], [23], [24], [26] came via search summaries and should be re-read before being quoted in the app.
+- The figures from [11], [15], [16], [23], [24] and [26], first taken from search summaries, were confirmed against the sources now listed for them (issue #13). That check corrected the ATP synthase rotation range: the earlier "100–650 rps in biology" came from a secondary 2025 paper, and its 650 rps is a bacterial enzyme at 45 °C running in reverse, not a human rate.
 - The "~⅓ of ATP spent on the Na⁺/K⁺ pump" figure is the textbook claim [1]; the true share varies widely by cell type.
