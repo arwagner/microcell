@@ -117,10 +117,11 @@ export function validateContent(records: readonly ContentRecord[]): ContentSet {
 // A citation marker is a source key in square brackets, such as `[inv]`, not followed by `(` (which
 // would make it a Markdown link). Several may follow one another: `[inv][proc]`.
 const MARKER = /\[([A-Za-z0-9][\w-]*)\](?!\()/g;
-// A number is a run of digits that is not part of a name. Names start with a letter (F1, CO2) or are
-// digits plus one capital letter (80S, 3D); anything else with a digit in it (5.6, 100nm, 10-fold) is a number.
+// A number is a run of digits that is not part of a name. Names start with a letter (F1, CO2), are a
+// sedimentation label (80S ribosome, 18S rRNA) or are 2D/3D. Anything else with a digit in it (5.6, 100nm,
+// 10-fold, 37C, 10K, 2X) is a number: a looser rule such as "digits plus any capital" lets those through uncited.
 const TOKEN = /[\p{L}\p{N}]+/gu;
-const NAME = /^(?:\p{L}[\p{L}\p{N}]*|\d+\p{Lu})$/u;
+const NAME = /^(?:\p{L}[\p{L}\p{N}]*|\d+S|[23]D)$/u;
 // Ordered-list numbers, bullets and heading marks are layout, not facts.
 const LINE_LAYOUT = /^\s*(?:[-*+]|\d+[.)]|#+)\s+/;
 

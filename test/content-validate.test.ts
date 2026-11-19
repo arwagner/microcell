@@ -289,6 +289,14 @@ describe("what counts as a number that needs a citation", () => {
 		expect(() => loadContent(files(set))).not.toThrow();
 	});
 
+	test.each(["It works best at 37C.", "It weighs about 10K.", "It is 2X faster.", "It sits in 1M salt."])(
+		"digits with a capital that is not a name are still a number: %s",
+		(sentence) => {
+			const set = edit(validSet(), "content/parts/c-ring.md", "There is more to learn.", sentence);
+			expect(rejection(set).field).toBe("## Go deeper");
+		},
+	);
+
 	test("a unit glued to a number is still a number", () => {
 		const set = edit(validSet(), "content/parts/c-ring.md", "There is more to learn.", "It is 10nm wide.");
 		expect(rejection(set).field).toBe("## Go deeper");
