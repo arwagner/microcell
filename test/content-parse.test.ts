@@ -311,6 +311,11 @@ describe("invalid files are rejected naming the file and the field", () => {
 		],
 		["size with no source", file(withLine(ORGANELLE_FM, "size_nm", "size_nm: { value: 1000 }")), "size_nm.source"],
 		["no frontmatter", "## Label\nhi\n", "frontmatter"],
+		[
+			"count that is not a whole number",
+			file(withLine(ORGANELLE_FM, "count", "count: { min: 1.5, max: 3, source: inv }")),
+			"count.min",
+		],
 	];
 
 	test.each(cases)("%s", (_, text, field) => {
@@ -343,6 +348,12 @@ real_rate: { value: 100, unit: rotations/s, source: inv }
 shown_rate: { value: 1, unit: rotations/s }
 ${INVENTORY}`);
 		expect(rejection("content/processes/atp-synthesis.md", text).field).toBe("steps[1].stop");
+	});
+
+	test("an unquoted hex colour, which YAML reads as a comment, says to quote it", () => {
+		const e = rejection(path, file(withLine(ORGANELLE_FM, "colour", "colour: #E07A5F")));
+		expect(e.field).toBe("colour");
+		expect(e.message).toContain("quote");
 	});
 
 	test("a source that is neither a research file nor an https URL", () => {

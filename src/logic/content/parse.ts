@@ -111,6 +111,9 @@ class Fields {
 	}
 
 	colour(key: string): string {
+		// The likeliest mistake: unquoted, `colour: #3a7bd5` is a YAML comment, so the field reads as empty.
+		if (!this.has(key))
+			this.fail(key, 'is missing (quote hex colours, like "#3a7bd5": an unquoted # starts a YAML comment)');
 		const v = this.text(key);
 		if (!HEX.test(v)) this.fail(key, `"${v}" is not a hex colour like #3a7bd5`);
 		return v.toLowerCase();
@@ -140,6 +143,13 @@ class Fields {
 		});
 	}
 
+	/** Counts are of whole things, so a fractional bound is a typo. */
+	wholeCount(key: string): number {
+		const v = this.positive(key);
+		if (!Number.isInteger(v)) this.fail(key, "must be a whole number");
+		return v;
+	}
+
 	sourcedValue(key: string): SourcedValue {
 		const f = this.child(key, "a sourced value {value, source}");
 		return { value: f.positive("value"), source: f.sourceKey("source") };
@@ -147,8 +157,8 @@ class Fields {
 
 	sourcedRange(key: string): SourcedRange {
 		const f = this.child(key, "a range {min, max, source}");
-		const min = f.positive("min");
-		const max = f.positive("max");
+		const min = f.wholeCount("min");
+		const max = f.wholeCount("max");
 		if (min > max) this.fail(key, `min (${min}) is greater than max (${max})`);
 		return { min, max, source: f.sourceKey("source") };
 	}
