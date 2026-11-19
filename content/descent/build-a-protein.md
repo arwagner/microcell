@@ -9,15 +9,16 @@ name: How your cell builds a protein
 beats:
   - focus: cell
     narration: >-
-      This is your cell. Right now it is building proteins, following instructions written in its
-      genes [proc]. Let's follow one protein from start to finish.
+      This is your cell. Right now it is building proteins, following its own built-in
+      instructions [proc]. Let's follow one protein from start to finish.
   - focus: nucleus
     narration: >-
       This is the nucleus. It holds your DNA, your cell's instruction book [inv].
   - focus: transcription-site
     narration: >-
-      Here, an enzyme called RNA polymerase II reads one gene in the DNA. It copies the gene into
-      messenger RNA (mRNA), a working copy that can leave the nucleus [proc].
+      Here, a machine called RNA polymerase II reads one gene, a stretch of DNA with the instructions
+      for a protein [proc]. It copies the gene into messenger RNA (mRNA), a working copy that can leave
+      the nucleus [proc].
   - focus: nucleus
     narration: >-
       The finished mRNA heads for the nucleus's wall. It slips out through a nuclear pore, one of the
@@ -31,7 +32,7 @@ beats:
     narration: >-
       A ribosome reads the mRNA three letters at a time and adds one amino acid, a protein building
       block, for each [proc]. The chain grows, then folds into a working protein [proc]. Next, want to
-      see how your mitochondria make ATP, your cell's energy currency [inv]?
+      see how your mitochondria, the cell's power plants, make ATP, your cell's energy currency [inv]?
     offer: atp-synthesis
 sources:
   - key: proc
