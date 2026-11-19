@@ -23,3 +23,23 @@ _Avoid_: zoom level, magnification
 **Explanation layer**:
 One of the depths a thing is explained at: a one-line label, a paragraph, then "go deeper".
 _Avoid_: tooltip, description, info panel
+
+**Stop**:
+One of four named bands of scale the cell is organised into: Cell, Organelle, Machinery, Molecule.
+_Avoid_: level, rung, zoom level
+
+**Focus**:
+The thing the learner is currently inside or looking at, which the view orbits around.
+_Avoid_: selection, target
+
+**Dive**:
+Moving into a thing so it becomes the focus at the next stop down.
+_Avoid_: drill down, zoom into
+
+**Site**:
+A hand-built place where the cell can be explored all the way down to the Molecule stop, usually where a process happens.
+_Avoid_: hotspot, location, scene
+
+**Guided descent**:
+An optional narrated flight down through the stops that tells one story.
+_Avoid_: tour, tutorial, walkthrough
