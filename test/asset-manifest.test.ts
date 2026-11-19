@@ -115,7 +115,7 @@ describe("parseManifest", () => {
 });
 
 describe("assets/manifest.json", () => {
-	const entries = parseManifest(JSON.parse(readFileSync("assets/manifest.json", "utf8")));
+	const entries = parseManifest(JSON.parse(readFileSync(new URL("../assets/manifest.json", import.meta.url), "utf8")));
 
 	test("passes the validator with exactly the three PDB structures", () => {
 		expect(entries).toHaveLength(3);
