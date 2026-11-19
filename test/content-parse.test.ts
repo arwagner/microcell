@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { ContentError, type ContentRecord, parseContent } from "../src/logic/content";
+import { ContentError, parseContent } from "../src/logic/content";
 
 const LAYERS = `
 ## Label
@@ -34,10 +34,6 @@ function file(frontmatter: string, body = LAYERS): string {
 
 const ORGANELLE = file(ORGANELLE_FM);
 
-function parse(path: string, text: string): ContentRecord {
-	return parseContent(path, text);
-}
-
 /** Replaces one frontmatter line (matched by its key) or drops it when `line` is empty. */
 function withLine(fm: string, key: string, line: string): string {
 	return fm
@@ -59,7 +55,7 @@ function rejection(path: string, text: string): ContentError {
 
 describe("valid files parse to typed records", () => {
 	test("cell", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/cell.md",
 			file(`id: cell
 kind: cell
@@ -90,7 +86,7 @@ ${INVENTORY}`),
 	});
 
 	test("organelle", () => {
-		const r = parse("content/organelles/mitochondrion.md", ORGANELLE);
+		const r = parseContent("content/organelles/mitochondrion.md", ORGANELLE);
 		expect(r).toMatchObject({
 			kind: "organelle",
 			id: "mitochondrion",
@@ -106,7 +102,7 @@ ${INVENTORY}`),
 
 	test("organelle that is not diveable keeps its coming_later note", () => {
 		const fm = withLine(ORGANELLE_FM, "diveable", "diveable: false\ncoming_later: Inside a lysosome, soon.");
-		expect(parse("content/organelles/lysosome.md", file(fm))).toMatchObject({
+		expect(parseContent("content/organelles/lysosome.md", file(fm))).toMatchObject({
 			diveable: false,
 			comingLater: "Inside a lysosome, soon.",
 		});
@@ -120,8 +116,8 @@ stop: Machinery
 parent: mitochondrion
 machine: atp-synthase
 ${INVENTORY}`;
-		expect(parse("content/sites/crista.md", file(fm))).not.toHaveProperty("process");
-		expect(parse("content/sites/crista.md", file(`${fm}\nprocess: atp-synthesis`))).toMatchObject({
+		expect(parseContent("content/sites/crista.md", file(fm))).not.toHaveProperty("process");
+		expect(parseContent("content/sites/crista.md", file(`${fm}\nprocess: atp-synthesis`))).toMatchObject({
 			kind: "site",
 			parent: "mitochondrion",
 			machine: "atp-synthase",
@@ -130,7 +126,7 @@ ${INVENTORY}`;
 	});
 
 	test("machine", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/machines/atp-synthase.md",
 			file(`id: atp-synthase
 kind: machine
@@ -151,7 +147,7 @@ sources:
 	});
 
 	test("part", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/parts/c-ring.md",
 			file(`id: c-ring
 kind: part
@@ -164,7 +160,7 @@ ${INVENTORY}`),
 	});
 
 	test("cytoplasm", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/cytoplasm.md",
 			file(`id: cytoplasm
 kind: cytoplasm
@@ -177,7 +173,7 @@ ${INVENTORY}`),
 	});
 
 	test("process", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/processes/atp-synthesis.md",
 			file(`id: atp-synthesis
 kind: process
@@ -204,7 +200,7 @@ sources:
 	});
 
 	test("descent needs no explanation layers", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/descent/build-a-protein.md",
 			file(
 				`id: build-a-protein
@@ -230,7 +226,7 @@ ${INVENTORY}`,
 	});
 
 	test("page keeps its whole body", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/pages/about.md",
 			file(
 				`id: about
@@ -249,7 +245,7 @@ ${INVENTORY}`,
 	});
 
 	test("comparisons", () => {
-		const r = parse(
+		const r = parseContent(
 			"content/comparisons.md",
 			file(
 				`id: comparisons
