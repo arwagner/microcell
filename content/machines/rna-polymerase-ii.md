@@ -21,9 +21,9 @@ sources:
 RNA polymerase II, the gene copier
 
 ## Paragraph
-This is RNA polymerase II, the enzyme that copies genes into messenger RNA. It grips the DNA, unwinds a short stretch, reads one strand, and strings together a matching RNA chain one letter at a time [proc]. It is built from 12 proteins that work as one machine [parts].
+This is RNA polymerase II, the enzyme (a protein that does one chemical job) that copies genes into messenger RNA. It grips the DNA, unwinds a short stretch, reads one strand, and strings together a matching RNA chain one letter at a time [proc]. It is built from 12 proteins that work as one machine [parts].
 
 ## Go deeper
 It copies roughly 20 to 100 RNA letters (nucleotides) per second, though it often pauses [proc].
 
-The model you see is the cow enzyme from PDB entry 5FLM, which differs from your own in only 7 of its amino acids [pdb][parts].
+The model you see is the cow enzyme from entry 5FLM of the Protein Data Bank (PDB), a free public archive of molecule structures, which differs from your own in only 7 of its amino acids [pdb][parts].

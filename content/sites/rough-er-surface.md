@@ -18,7 +18,7 @@ sources:
 Ribosomes building proteins on the rough ER
 
 ## Paragraph
-You are on the outside of the rough ER, a network of flat sacs studded with ribosomes, the machines that build proteins. The ribosomes here make proteins that will sit in a membrane or be sent out of the cell [inv].
+You are on the outside of the rough endoplasmic reticulum (ER), a network of flat sacs studded with ribosomes, the machines that build proteins. The ribosomes here make proteins that will sit in a membrane or be sent out of the cell [inv].
 
 ## Go deeper
 Each sac is thin: the space inside it is only 20 to 30 nm wide [inv].

@@ -20,7 +20,7 @@ sources:
 The F1 head, where ATP is made
 
 ## Paragraph
-The head holds three sites where ATP is built. As the axle turns, it pushes each site in turn to grab ADP and phosphate, press them together into ATP, and let the ATP go [proc][parts].
+The head holds three sites where ATP is built. As the axle turns, it pushes each site in turn to grab ADP and phosphate (the two pieces ATP is made from), press them together into ATP, and let the ATP go [proc][parts].
 
 ## Go deeper
 Each one-third turn makes one ATP, so a full turn makes 3 [proc]. The head is six proteins, three called alpha and three called beta [parts]. In the human structure it is about 10 nm tall and 13 nm across [size].
