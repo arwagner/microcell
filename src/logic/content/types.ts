@@ -52,6 +52,8 @@ export interface Rate {
 	source?: string;
 }
 
+export type SourcedRate = Rate & { source: string };
+
 export interface Layers {
 	label: string;
 	paragraph: string;
@@ -126,7 +128,7 @@ export interface ProcessRecord extends Common {
 	kind: "process";
 	layers: Layers;
 	steps: ProcessStep[];
-	realRate: Rate & { source: string };
+	realRate: SourcedRate;
 	shownRate: Rate;
 }
 

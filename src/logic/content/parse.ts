@@ -12,6 +12,7 @@ import {
 	type Rate,
 	type Source,
 	type SourcedRange,
+	type SourcedRate,
 	type SourcedValue,
 	STOPS,
 	type Stop,
@@ -42,6 +43,11 @@ type Obj = Record<string, unknown>;
 
 function isObj(v: unknown): v is Obj {
 	return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+// A type guard, so checking a kind against a kind list also narrows it for the switches that follow.
+function isOneOf<T extends string>(v: unknown, allowed: readonly T[]): v is T {
+	return typeof v === "string" && (allowed as readonly string[]).includes(v);
 }
 
 // Reads typed fields out of one YAML mapping, naming the full field path (e.g. `steps[1].stop`) in errors.
@@ -84,10 +90,8 @@ class Fields {
 
 	oneOf<T extends string>(key: string, allowed: readonly T[]): T {
 		const v = this.raw(key);
-		if (typeof v !== "string" || !(allowed as readonly string[]).includes(v)) {
-			this.fail(key, `"${String(v)}" is not one of ${allowed.join(", ")}`);
-		}
-		return v as T;
+		if (!isOneOf(v, allowed)) this.fail(key, `"${String(v)}" is not one of ${allowed.join(", ")}`);
+		return v;
 	}
 
 	stop(key: string): Stop {
@@ -149,11 +153,16 @@ class Fields {
 		return { min, max, source: f.sourceKey("source") };
 	}
 
-	rate(key: string, sourced: boolean): Rate {
+	rate(key: string): Rate {
 		const f = this.child(key, "a rate {value, unit, source}");
 		const rate: Rate = { value: f.positive("value"), unit: f.text("unit") };
-		if (sourced || f.has("source")) rate.source = f.sourceKey("source");
+		if (f.has("source")) rate.source = f.sourceKey("source");
 		return rate;
+	}
+
+	sourcedRate(key: string): SourcedRate {
+		const f = this.child(key, "a rate {value, unit, source}");
+		return { value: f.positive("value"), unit: f.text("unit"), source: f.sourceKey("source") };
 	}
 }
 
@@ -237,10 +246,10 @@ export function parseContent(file: string, text: string): ContentRecord {
 	const sections = readSections(file, body);
 	const common = { file, id, name, sources, sections };
 
-	const layered = (LAYERED_KINDS as readonly string[]).includes(kind);
+	const layered = isOneOf(kind, LAYERED_KINDS);
 	const layers = layered ? readLayers(file, sections) : undefined;
 
-	if ((PLACED_KINDS as readonly string[]).includes(kind)) {
+	if (isOneOf(kind, PLACED_KINDS)) {
 		const stop = f.stop("stop");
 		const colour = f.has("colour") ? f.colour("colour") : undefined;
 		const placed = { ...common, stop, layers: layers as Layers, ...(colour ? { colour } : {}) };
@@ -292,8 +301,8 @@ export function parseContent(file: string, text: string): ContentRecord {
 			const steps: ProcessStep[] = f
 				.list("steps", { nonEmpty: true })
 				.map((s) => ({ stop: s.stop("stop"), machine: s.id("machine") }));
-			const realRate = f.rate("real_rate", true) as Rate & { source: string };
-			const shownRate = f.rate("shown_rate", false);
+			const realRate = f.sourcedRate("real_rate");
+			const shownRate = f.rate("shown_rate");
 			// The app shows "slowed ×N" as real ÷ shown, which only means something in one unit.
 			if (shownRate.unit !== realRate.unit) {
 				f.fail("shown_rate.unit", `"${shownRate.unit}" must match real_rate.unit "${realRate.unit}"`);
@@ -316,6 +325,4 @@ export function parseContent(file: string, text: string): ContentRecord {
 			return { ...common, kind, items };
 		}
 	}
-	// Every kind is handled above; this satisfies the compiler's exhaustiveness check.
-	return top.fail("kind", `"${kind}" has no parser`);
 }
