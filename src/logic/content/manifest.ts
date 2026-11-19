@@ -1,7 +1,9 @@
 // Validator for assets/manifest.json: one entry per external asset, so the Credits page can be built from it
 // and nothing ships without a known source and license (see research/3d-assets.md, "Recommendation", item 4).
 
-export type AssetUse = "required" | "courtesy";
+// One list feeds the type, the check and the error message, so a new use is added in one place.
+const USES = ["required", "courtesy"] as const;
+export type AssetUse = (typeof USES)[number];
 
 export interface AssetEntry {
 	id: string;
@@ -15,7 +17,6 @@ export interface AssetEntry {
 }
 
 const STRING_FIELDS = ["id", "source", "license", "credit", "use"] as const;
-const USES: readonly string[] = ["required", "courtesy"] satisfies AssetUse[];
 
 export class ManifestError extends Error {
 	readonly problems: string[];
@@ -74,8 +75,8 @@ export function parseManifest(data: unknown): AssetEntry[] {
 		if (isFilled(raw.source) && !isWebUrl(raw.source)) {
 			problems.push(`${where}: field "source" is not an http(s) URL: "${raw.source}"`);
 		}
-		if (isFilled(raw.use) && !USES.includes(raw.use)) {
-			problems.push(`${where}: field "use" must be "required" or "courtesy", not "${raw.use}"`);
+		if (isFilled(raw.use) && !(USES as readonly string[]).includes(raw.use)) {
+			problems.push(`${where}: field "use" must be ${USES.map((u) => `"${u}"`).join(" or ")}, not "${raw.use}"`);
 		}
 		if (isFilled(raw.id)) {
 			const first = firstIndexOfId.get(raw.id);
