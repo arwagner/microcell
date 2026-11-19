@@ -267,25 +267,16 @@ describe("the set is rejected, naming the file and the field", () => {
 		expect(e.message).toBe('content/descent/build-a-protein.md: beats[1].focus: "pore" names no content file');
 	});
 
-	test("a descent beat that offers something other than a process", () => {
-		const e = rejection(
-			edit(validSet(), "content/descent/build-a-protein.md", "focus: crista,", "focus: crista, offer: crista,"),
-		);
+	test("a descent that offers something other than a process", () => {
+		const e = rejection(edit(validSet(), "content/descent/build-a-protein.md", "beats:", "offer: crista\nbeats:"));
 		expect(e.message).toBe(
-			'content/descent/build-a-protein.md: beats[1].offer: "crista" is a site, but this must name a process',
+			'content/descent/build-a-protein.md: offer: "crista" is a site, but this must name a process',
 		);
 	});
 
-	test("a descent beat may offer a process", () => {
-		const set = edit(
-			validSet(),
-			"content/descent/build-a-protein.md",
-			"focus: crista,",
-			"focus: crista, offer: atp-synthesis,",
-		);
-		expect(loadContent(files(set)).byId.get("build-a-protein")).toMatchObject({
-			beats: [{ focus: "cell" }, { focus: "crista", offer: "atp-synthesis" }],
-		});
+	test("a descent may offer a process", () => {
+		const set = edit(validSet(), "content/descent/build-a-protein.md", "beats:", "offer: atp-synthesis\nbeats:");
+		expect(loadContent(files(set)).byId.get("build-a-protein")).toMatchObject({ offer: "atp-synthesis" });
 	});
 });
 

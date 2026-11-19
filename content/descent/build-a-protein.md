@@ -33,7 +33,7 @@ beats:
       A ribosome reads the mRNA three letters at a time and adds one amino acid, a protein building
       block, for each [proc]. The chain grows, then folds into a working protein [proc]. Next, want to
       see how your mitochondria, the cell's power plants, make ATP, your cell's energy currency [inv]?
-    offer: atp-synthesis
+offer: atp-synthesis
 sources:
   - key: proc
     file: research/processes.md

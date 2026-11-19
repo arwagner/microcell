@@ -299,12 +299,10 @@ export function parseContent(file: string, text: string): ContentRecord {
 			return { ...common, kind, layers: layers as Layers, steps, realRate, shownRate };
 		}
 		case "descent": {
-			const beats: DescentBeat[] = f.list("beats", { nonEmpty: true }).map((b) => ({
-				focus: b.id("focus"),
-				narration: b.text("narration"),
-				...(b.has("offer") ? { offer: b.id("offer") } : {}),
-			}));
-			return { ...common, kind, beats };
+			const beats: DescentBeat[] = f
+				.list("beats", { nonEmpty: true })
+				.map((b) => ({ focus: b.id("focus"), narration: b.text("narration") }));
+			return { ...common, kind, beats, ...(f.has("offer") ? { offer: f.id("offer") } : {}) };
 		}
 		case "page":
 			if (body.trim() === "") f.fail("body", "a page needs some text");

@@ -211,7 +211,7 @@ beats:
     narration: This is your cell.
   - focus: nucleus
     narration: Its instructions live here.
-    offer: atp-synthesis
+offer: atp-synthesis
 ${INVENTORY}`,
 				"",
 			),
@@ -220,11 +220,11 @@ ${INVENTORY}`,
 			kind: "descent",
 			beats: [
 				{ focus: "cell", narration: "This is your cell." },
-				{ focus: "nucleus", narration: "Its instructions live here.", offer: "atp-synthesis" },
+				{ focus: "nucleus", narration: "Its instructions live here." },
 			],
+			offer: "atp-synthesis",
 		});
 		expect(r).not.toHaveProperty("layers");
-		if (r.kind === "descent") expect(r.beats[0]).not.toHaveProperty("offer");
 	});
 
 	test("page keeps its whole body", () => {

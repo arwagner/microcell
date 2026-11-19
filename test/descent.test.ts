@@ -34,10 +34,7 @@ test.each(FOCUS.map((focus, i) => [i, focus]))("beat %i (%s) narrates in one to 
 	expect(n).toBeLessThanOrEqual(3);
 });
 
-test("the last beat, and only the last, offers the energy story", () => {
-	const last = descent.beats.at(-1);
-	expect(last?.offer).toBe("atp-synthesis");
-	expect(set.byId.get("atp-synthesis")?.kind).toBe("process");
-	expect(descent.beats.slice(0, -1).filter((b) => b.offer !== undefined)).toEqual([]);
-	expect(sentences(last?.narration ?? "").at(-1)).toMatch(/ATP.*\?/);
+test("ends by offering the energy story", () => {
+	expect(descent.offer).toBe("atp-synthesis");
+	expect(sentences(descent.beats.at(-1)?.narration ?? "").at(-1)).toMatch(/ATP.*\?/);
 });
