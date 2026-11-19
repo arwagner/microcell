@@ -52,13 +52,13 @@ export function validateContent(records: readonly ContentRecord[]): ContentSet {
 	}
 
 	const ref = (r: ContentRecord, field: string, id: string, want: (k: Kind) => boolean, wantName: string) => {
-		const target = byId.get(id);
-		if (!target) throw new ContentError(r.file, field, `"${id}" names no content file`);
-		if (!want(target.kind)) {
+		const referenced = byId.get(id);
+		if (!referenced) throw new ContentError(r.file, field, `"${id}" names no content file`);
+		if (!want(referenced.kind)) {
 			throw new ContentError(
 				r.file,
 				field,
-				`"${id}" is ${article(target.kind)} ${target.kind}, but this must name ${wantName}`,
+				`"${id}" is ${article(referenced.kind)} ${referenced.kind}, but this must name ${wantName}`,
 			);
 		}
 	};
