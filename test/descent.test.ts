@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { type DescentRecord, loadContent, sentences } from "../src/logic/content";
+import { type DescentRecord, loadContent, PLACED_KINDS, sentences } from "../src/logic/content";
 import { contentFiles } from "./content-on-disk";
 
 // The loader checks that each beat's focus is something in the cell. What it can't know is the story
@@ -24,7 +24,7 @@ test("runs cell → nucleus → DNA → pore → rough ER → ribosome", () => {
 
 test("every beat's focus resolves to something in the cell", () => {
 	for (const b of descent.beats) {
-		expect(["cell", "organelle", "site", "machine", "part"], b.focus).toContain(set.byId.get(b.focus)?.kind);
+		expect(PLACED_KINDS, b.focus).toContain(set.byId.get(b.focus)?.kind);
 	}
 });
 
