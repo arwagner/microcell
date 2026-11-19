@@ -26,4 +26,4 @@ This is RNA polymerase II, the enzyme (a protein that does one chemical job) tha
 ## Go deeper
 It copies roughly 20 to 100 RNA letters (nucleotides) per second, though it often pauses [proc].
 
-The model you see is the cow enzyme from entry 5FLM of the Protein Data Bank (PDB), a free public archive of molecule structures, which differs from your own in only 7 of its amino acids [pdb][parts].
+The model you see is the cow enzyme, which differs from your own in only 7 of its amino acids (protein building blocks) [parts]. It comes from entry 5FLM of the Protein Data Bank (PDB), a free public archive of molecule structures [pdb].
