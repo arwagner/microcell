@@ -25,9 +25,9 @@ sources:
 A ribosome, your cell's protein builder
 
 ## Paragraph
-This is a ribosome, the machine that builds proteins. It reads an mRNA three letters at a time; for each three-letter word, called a codon, it adds one amino acid to a growing chain [proc]. It is about 30 nm across and made of two parts, a small subunit and a large one [mol].
+This is a ribosome, the machine that builds proteins. It reads an mRNA, a gene's working copy, three letters at a time; for each three-letter word, called a codon, it adds one amino acid (a protein building block) to a growing chain [proc]. It is about 30 nm across, in two parts: a small and a large subunit [mol].
 
 ## Go deeper
 Each amino acid arrives on a tRNA, a small adapter molecule that matches one codon [proc]. A HeLa cell holds roughly 3 million to 9.5 million ribosomes [mol].
 
-The model you see is the human ribosome, from PDB entry 4V6X [pdb][parts].
+The model you see is the human ribosome, from entry 4V6X of the Protein Data Bank (PDB), a free public archive of molecule structures [pdb][parts].

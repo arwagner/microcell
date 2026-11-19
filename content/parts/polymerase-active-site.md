@@ -17,4 +17,4 @@ The active site, where RNA is built
 DNA enters a groove in the polymerase and comes apart just before the active site. Here the enzyme reads one DNA strand and adds the matching RNA letter to the growing end of the RNA [parts].
 
 ## Go deeper
-The new RNA stays paired with the DNA for 9 letters before the two part [parts]. Two metal ions sit at the active site [parts].
+In the yeast enzyme, the new RNA stays paired with the DNA for 9 letters before the two part, and two metal ions sit at the active site [parts].

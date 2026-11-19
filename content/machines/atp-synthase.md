@@ -22,9 +22,9 @@ sources:
 ATP synthase, a spinning motor that makes ATP
 
 ## Paragraph
-This is ATP synthase, a real rotary motor. Protons flowing back across the membrane turn its rotor, and the spinning drives its head to make ATP, your cell's energy currency [proc]. Each full turn makes 3 ATP [proc]. The human enzyme is about 23 nm tall [size].
+This is ATP synthase, a real rotary motor. Protons (hydrogen ions) flowing back across the membrane turn its rotor, and the spinning drives its head to make ATP, your cell's energy currency [proc]. Each full turn makes 3 ATP [proc]. The human enzyme is about 23 nm tall [size].
 
 ## Go deeper
 In mammals like you, the ring in its rotor has 8 pieces, so 8 protons pass through for each turn [proc]. Nobody has measured its speed in human mitochondria [proc]. It makes more than 100 ATP per second, so it likely turns tens to a few hundred times a second [proc].
 
-The model you see is the human enzyme, from PDB entry 8H9S [pdb].
+The model you see is the human enzyme, from entry 8H9S of the Protein Data Bank (PDB), a free public archive of molecule structures [pdb].

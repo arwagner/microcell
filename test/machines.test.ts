@@ -3,10 +3,11 @@ import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { parse as parseYaml } from "yaml";
 
-// The content loader checks the shape of each file and that every number is cited. What it can't
-// know is the inventory this ticket fixes: which three sites, machines and parts exist, how they hang
-// together, that each machine's structure is one the asset manifest credits, and that the ATP
-// synthase size rests on the mammalian measurement rather than the older bacterial figure.
+// The all-content checks (the content parser and validator) belong to the content tickets this one
+// depends on, so this file checks the shape and citations of its own files directly. It also pins
+// what only this ticket fixes: which three sites, machines and parts exist, how they hang together,
+// that each machine's structure is one the asset manifest credits, and that the ATP synthase size
+// rests on the mammalian measurement rather than the older bacterial figure.
 
 const ROOT = join(import.meta.dirname, "..");
 
@@ -84,8 +85,8 @@ function words(text: string): number {
 	return text.replace(MARKER, "").split(/\s+/).filter(Boolean).length;
 }
 
-// A digit anywhere outside a name (F1, RPB5, 80S) counts as a figure. Stricter than the loader's rule
-// on purpose: these files are short, and a false alarm costs one citation.
+// A digit anywhere outside a name (F1, RPB5, 80S) counts as a figure. Strict on purpose: these files
+// are short, and a false alarm costs one citation.
 function hasFigure(sentence: string): boolean {
 	return sentence
 		.replace(MARKER, " ")
@@ -99,21 +100,16 @@ const parts = Object.keys(PARTS).map((id) => read("parts", id));
 const all = [...sites, ...machines, ...parts];
 
 test("content holds exactly the three sites, three machines and their parts", () => {
-	expect(filesIn("sites")).toEqual(
-		Object.keys(SITES)
+	for (const [dir, want] of [
+		["sites", SITES],
+		["machines", MACHINES],
+		["parts", PARTS],
+	] as const) {
+		const files = Object.keys(want)
 			.map((id) => `${id}.md`)
-			.sort(),
-	);
-	expect(filesIn("machines")).toEqual(
-		Object.keys(MACHINES)
-			.map((id) => `${id}.md`)
-			.sort(),
-	);
-	expect(filesIn("parts")).toEqual(
-		Object.keys(PARTS)
-			.map((id) => `${id}.md`)
-			.sort(),
-	);
+			.sort();
+		expect(filesIn(dir), dir).toEqual(files);
+	}
 	expect(new Set(all.map((e) => e.id)).size).toBe(all.length);
 });
 
