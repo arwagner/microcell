@@ -13,7 +13,7 @@ beats:
       genes [proc]. Let's follow one protein from start to finish.
   - focus: nucleus
     narration: >-
-      This is the nucleus. It holds your DNA, the instructions for everything your cell makes [inv].
+      This is the nucleus. It holds your DNA, your cell's instruction book [inv].
   - focus: transcription-site
     narration: >-
       Here, an enzyme called RNA polymerase II reads one gene in the DNA. It copies the gene into
@@ -24,9 +24,9 @@ beats:
       gates that control what enters and leaves the nucleus [proc][inv].
   - focus: rough-er
     narration: >-
-      Out in the cell, the mRNA reaches the rough ER (endoplasmic reticulum), a network of flat sacs
-      studded with ribosomes [inv]. Proteins made here end up in a membrane or are sent out of the
-      cell [inv].
+      Out in the cell, the mRNA meets ribosomes, the machines that build proteins [proc]. Some of
+      them stud the rough ER (endoplasmic reticulum), a network of flat sacs, and the proteins they
+      make there end up in a membrane or are sent out of the cell [inv].
   - focus: ribosome
     narration: >-
       A ribosome reads the mRNA three letters at a time and adds one amino acid, a protein building
