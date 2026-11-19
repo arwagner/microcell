@@ -38,7 +38,7 @@ Measured in mouse stem cells, a ribosome adds about 6 amino acids per second (5.
 For the copying step, RNA polymerase II adds roughly 20 to 100 RNA letters (nucleotides) per second [proc]. What you see is slowed down.
 
 ## Steps
-1. At the transcription site, RNA polymerase II copies a gene from DNA into RNA. The RNA gets a protective cap and tail and loses the stretches that don't code for protein, which makes it finished mRNA [proc].
+1. At the transcription site, RNA polymerase II copies a gene from DNA into RNA [proc]. The RNA gets a protective cap and tail and loses the stretches that don't code for protein, which makes it finished mRNA [proc].
 2. The mRNA leaves the nucleus through a nuclear pore, out into the rest of the cell [proc].
 3. On the surface of the rough ER, the mRNA meets ribosomes; the ones here make proteins bound for a membrane or for outside the cell [inv].
 4. A ribosome comes in two pieces, called subunits: the small one grabs the mRNA and slides to the start signal, then the large one joins it [proc].
