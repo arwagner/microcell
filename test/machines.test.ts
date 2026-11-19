@@ -100,21 +100,16 @@ const parts = Object.keys(PARTS).map((id) => read("parts", id));
 const all = [...sites, ...machines, ...parts];
 
 test("content holds exactly the three sites, three machines and their parts", () => {
-	expect(filesIn("sites")).toEqual(
-		Object.keys(SITES)
+	for (const [dir, want] of [
+		["sites", SITES],
+		["machines", MACHINES],
+		["parts", PARTS],
+	] as const) {
+		const files = Object.keys(want)
 			.map((id) => `${id}.md`)
-			.sort(),
-	);
-	expect(filesIn("machines")).toEqual(
-		Object.keys(MACHINES)
-			.map((id) => `${id}.md`)
-			.sort(),
-	);
-	expect(filesIn("parts")).toEqual(
-		Object.keys(PARTS)
-			.map((id) => `${id}.md`)
-			.sort(),
-	);
+			.sort();
+		expect(filesIn(dir), dir).toEqual(files);
+	}
 	expect(new Set(all.map((e) => e.id)).size).toBe(all.length);
 });
 
