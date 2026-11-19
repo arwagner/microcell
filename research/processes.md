@@ -14,7 +14,7 @@ Numbers are for human or other mammalian cells unless marked otherwise. Cellular
 | Mitochondrion | ~1 µm long |
 | Transport vesicle | ~50–100 nm |
 | Ribosome | ~25–30 nm |
-| ATP synthase | ~25 nm tall |
+| ATP synthase | ~25 nm tall (the human enzyme measures about 23 nm: see `research/machines.md`) |
 | Single small molecule (ATP, water) | < 1 nm |
 
 The candidates fall into three tiers by scale. Mitosis plays at whole-cell scale. Vesicle trafficking plays at organelle scale. Protein-making, ATP synthesis and membrane transport play at molecular scale (protein-making also spans the nucleus-to-cytoplasm trip).
