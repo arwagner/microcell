@@ -32,8 +32,8 @@ The peripheral stalk is the tallest part: it runs from the membrane region (its 
 ## RNA polymerase II parts
 
 - **The structure in the manifest, 5FLM, is the cow (*Bos taurus*) enzyme,** which "is identical to the human enzyme except for seven amino-acid residues" [M3]. Its 12 protein chains are the 12 Pol II subunits (RPB1 to RPB12), on a scaffold of DNA and RNA [M3][M6].
-- **Clamp.** A mobile part that swings over the active site [M4]. It is open when the enzyme is free and closes over the DNA and RNA during transcription [M5]; it shifts again ("induced fit") when nucleic acids bind in the mammalian enzyme [M3].
-- **Active site (active centre).** Where RNA is built. It holds two metal ions [M4]. DNA enters the main cleft and unwinds before the active site; nine base pairs of DNA-RNA hybrid extend from it, with the growing end of the RNA in the nucleotide addition site [M5]. PDB-101 describes the same thing as "a small transcription bubble, composed of two DNA strands and an RNA strand, ... bound in the active site" [M7].
+- **Clamp.** A mobile part that swings over the active site [M4]. It is open when the enzyme is free and closes over the DNA and RNA during transcription [M5] (both shown in the yeast enzyme); it shifts again ("induced fit") when nucleic acids bind in the mammalian enzyme [M3].
+- **Active site (active centre).** Where RNA is built. It holds two metal ions [M4]. DNA enters the main cleft and unwinds before the active site; nine base pairs of DNA-RNA hybrid extend from it, with the growing end of the RNA in the nucleotide addition site [M5] (both shown in the yeast enzyme). PDB-101 describes the same thing as "a small transcription bubble, composed of two DNA strands and an RNA strand, ... bound in the active site" [M7].
 - **Jaw.** DNA downstream of the transcription bubble (the stretch still to be read) contacts the jaw domain of subunit RPB5, "an interaction that is apparently already established during transcription initiation" [M3].
 
 ## Ribosome parts
