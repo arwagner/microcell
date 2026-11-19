@@ -131,6 +131,8 @@ export interface ProcessRecord extends Common {
 export interface DescentBeat {
 	focus: string;
 	narration: string;
+	/** A process id: the story the learner is offered next when the descent ends on this beat. */
+	offer?: string;
 }
 
 export interface DescentRecord extends Common {

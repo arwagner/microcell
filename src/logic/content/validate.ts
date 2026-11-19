@@ -45,8 +45,8 @@ export function loadContent(files: readonly ContentFile[]): ContentSet {
  * field at the first problem:
  * - ids are unique across all files;
  * - every `parent` exists and is the right kind for the tree (see PARENT_KIND, NESTED_ORGANELLES);
- * - a site's `process`/`machine`, a process step's `machine` and a descent beat's `focus` exist and
- *   are the right kind;
+ * - a site's `process`/`machine`, a process step's `machine` and a descent beat's `focus` and
+ *   `offer` exist and are the right kind;
  * - no two organelles share a `colour`;
  * - a process's `real_rate` and `shown_rate` units can be compared (see slowedFactor);
  * - every number in the prose is cited (see checkCitations).
@@ -111,6 +111,7 @@ export function validateContent(records: readonly ContentRecord[]): ContentSet {
 			case "descent":
 				r.beats.forEach((b, i) => {
 					ref(r, `beats[${i}].focus`, b.focus, (k) => PLACED.has(k), "something in the cell");
+					if (b.offer !== undefined) ref(r, `beats[${i}].offer`, b.offer, (k) => k === "process", "a process");
 				});
 				break;
 			case "page":
