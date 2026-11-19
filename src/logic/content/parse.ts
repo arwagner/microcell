@@ -190,13 +190,16 @@ function readSections(file: string, body: string): Record<string, string> {
 	const sections: Record<string, string> = {};
 	let heading: string | undefined;
 	let lines: string[] = [];
+	// A "## " line inside a fenced code block is code, not a heading.
+	let inFence = false;
 	const flush = () => {
 		if (heading === undefined) return;
 		if (heading in sections) throw new ContentError(file, `## ${heading}`, "appears twice");
 		sections[heading] = lines.join("\n").trim();
 	};
 	for (const line of body.split(/\r?\n/)) {
-		const m = /^##\s+(.+?)\s*$/.exec(line);
+		if (/^\s*(```|~~~)/.test(line)) inFence = !inFence;
+		const m = inFence ? null : /^##\s+(.+?)\s*$/.exec(line);
 		if (m?.[1] !== undefined) {
 			flush();
 			heading = m[1];
@@ -226,7 +229,8 @@ function readLayers(file: string, sections: Record<string, string>): Layers {
  * field on anything invalid. Checks that span files (parents exist, ids unique) are not done here.
  */
 export function parseContent(file: string, text: string): ContentRecord {
-	const m = FRONTMATTER.exec(text);
+	// Some editors save a byte order mark first; it is not part of the frontmatter fence.
+	const m = FRONTMATTER.exec(text.replace(/^\uFEFF/, ""));
 	if (!m) throw new ContentError(file, "frontmatter", "file must start with a --- fenced YAML block");
 	let data: unknown;
 	try {

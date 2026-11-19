@@ -266,6 +266,20 @@ ${INVENTORY}`,
 	});
 });
 
+describe("body and encoding edge cases", () => {
+	test("a byte order mark before the frontmatter is ignored", () => {
+		expect(parseContent("content/organelles/mitochondrion.md", `\uFEFF${ORGANELLE}`).id).toBe("mitochondrion");
+	});
+
+	test("a ## line inside a fenced code block is not a section heading", () => {
+		const r = parseContent(
+			"content/organelles/mitochondrion.md",
+			ORGANELLE.replace("their own small loop of DNA.", "their own small loop of DNA.\n\n```\n## Label\n```"),
+		);
+		expect(r).toMatchObject({ layers: { label: "The cell's power station." } });
+	});
+});
+
 describe("invalid files are rejected naming the file and the field", () => {
 	const path = "content/organelles/mitochondrion.md";
 	const cases: [string, string, string][] = [
