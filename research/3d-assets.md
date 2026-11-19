@@ -39,6 +39,10 @@ Checked 2026-11-19 against each source's own terms page, repo, or docs. Links ar
 
   Raw coordinates are small for single proteins but several MB for large complexes. Converted surface meshes are usually larger than the coordinates unless they are simplified (see Pipeline).
 - **Runtime fetch.** Both `files.rcsb.org` and `models.rcsb.org` send `access-control-allow-origin: *`, so a static page could fetch structures live. Bundling pre-converted meshes is still better: it works offline, is reproducible, and never breaks because a third-party server is down.
+- **Structures in the asset manifest** (organism, authors and title checked 2026-11-19 against the RCSB data API, `data.rcsb.org/rest/v1/core/entry/<id>`):
+  - **RNA polymerase II: 5FLM.** *Bos taurus* (cow), so mammalian but not human. Bernecky C, Herzog F, Baumeister W, Plitzko JM, Cramer P. "Structure of transcribing mammalian RNA polymerase II." *Nature* 2016;529:551, doi:10.1038/nature16482. ([RCSB 5FLM](https://www.rcsb.org/structure/5FLM))
+  - **80S ribosome: 4V6X.** *Homo sapiens*. Anger AM, Armache J-P, Berninghausen O, Habeck M, Subklewe M, Wilson DN, Beckmann R. "Structures of the human and Drosophila 80S ribosome." *Nature* 2013;497:80, doi:10.1038/nature12104. ([RCSB 4V6X](https://www.rcsb.org/structure/4V6X))
+  - **ATP synthase: 8H9S.** *Homo sapiens*. Lai Y, Zhang Y, Zhou S, Xu J, Du Z, Feng Z, Yu L, Zhao Z, Wang W, Tang Y, Yang X, Guddat LW, Liu F, Gao Y, Rao Z, Gong H. "Structure of the human ATP synthase." *Mol Cell* 2023, doi:10.1016/j.molcel.2023.04.029. ([RCSB 8H9S](https://www.rcsb.org/structure/8H9S))
 
 ### PDB-101
 
