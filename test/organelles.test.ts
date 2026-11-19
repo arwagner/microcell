@@ -2,13 +2,13 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { parse as parseYaml } from "yaml";
+import { headings, ROOT, words } from "./content-on-disk";
 
 // The all-content checks (the parser and the citation-key test) belong to the content tickets this
 // one depends on. This file pins what only this ticket fixes: which twelve organelles exist, which
 // three can be dived into, and that figures research/ marks unconfirmed are never told to the
 // learner as fact.
 
-const ROOT = join(import.meta.dirname, "..");
 const DIR = "content/organelles";
 
 const ORGANELLES = [
@@ -70,16 +70,6 @@ function section(body: string, heading: string): string {
 	return m?.[1]?.trim() ?? "";
 }
 
-function headings(file: string): string[] {
-	return readFileSync(join(ROOT, file), "utf8")
-		.split(/\r?\n/)
-		.flatMap((line) => /^#{1,6}\s+(.+?)\s*$/.exec(line)?.[1] ?? []);
-}
-
-function wordsWithoutCitations(text: string): number {
-	return text.split(/\s+/).filter((w) => w !== "" && !/^\[[\w-]+\]+$/.test(w)).length;
-}
-
 const all = ORGANELLES.map(read);
 
 test("content/organelles holds exactly the twelve organelles", () => {
@@ -120,9 +110,9 @@ describe.each(all)("$id", (organelle) => {
 		const label = section(organelle.body, "Label");
 		expect(label).not.toBe("");
 		expect(label).not.toContain("\n");
-		expect(wordsWithoutCitations(label)).toBeLessThanOrEqual(8);
-		expect(wordsWithoutCitations(section(organelle.body, "Paragraph"))).toBeGreaterThan(0);
-		expect(wordsWithoutCitations(section(organelle.body, "Paragraph"))).toBeLessThanOrEqual(60);
+		expect(words(label)).toBeLessThanOrEqual(8);
+		expect(words(section(organelle.body, "Paragraph"))).toBeGreaterThan(0);
+		expect(words(section(organelle.body, "Paragraph"))).toBeLessThanOrEqual(60);
 		expect(section(organelle.body, "Go deeper")).not.toBe("");
 	});
 

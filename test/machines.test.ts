@@ -2,13 +2,12 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { parse as parseYaml } from "yaml";
+import { headings, MARKER, ROOT, words } from "./content-on-disk";
 
 // The content loader checks the shape of each file and that every number is cited. What it can't
 // know is the inventory this ticket fixes: which three sites, machines and parts exist, how they hang
 // together, that each machine's structure is one the asset manifest credits, and that the ATP
 // synthase size rests on the mammalian measurement rather than the older bacterial figure.
-
-const ROOT = join(import.meta.dirname, "..");
 
 // Each site sits in the organelle it belongs to and holds the one machine shown there.
 const SITES = {
@@ -70,18 +69,6 @@ function filesIn(dir: string): string[] {
 function section(body: string, heading: string): string {
 	const m = new RegExp(`^## ${heading}\\r?\\n([\\s\\S]*?)(?=^## |(?![\\s\\S]))`, "m").exec(body);
 	return m?.[1]?.trim() ?? "";
-}
-
-function headings(file: string): string[] {
-	return readFileSync(join(ROOT, file), "utf8")
-		.split(/\r?\n/)
-		.flatMap((line) => /^#{1,6}\s+(.+?)\s*$/.exec(line)?.[1] ?? []);
-}
-
-const MARKER = /\[([A-Za-z0-9][\w-]*)\](?!\()/g;
-
-function words(text: string): number {
-	return text.replace(MARKER, "").split(/\s+/).filter(Boolean).length;
 }
 
 // A digit anywhere outside a name (F1, RPB5, 80S) counts as a figure. Stricter than the loader's rule

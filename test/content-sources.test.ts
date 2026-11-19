@@ -1,25 +1,11 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { parse as parseYaml } from "yaml";
+import { contentFiles, headings, ROOT, readRepoFile as read } from "./content-on-disk";
 
 // A citation is only useful if a reviewer can follow it: the key must be declared in the file's
 // sources, and the research file and section it names must exist on disk.
-
-const ROOT = join(import.meta.dirname, "..");
-
-function contentPaths(dir = "content"): string[] {
-	const abs = join(ROOT, dir);
-	if (!existsSync(abs)) return [];
-	return readdirSync(abs, { recursive: true, encoding: "utf8" })
-		.filter((name) => name.endsWith(".md"))
-		.map((name) => join(dir, name).split("\\").join("/"))
-		.sort();
-}
-
-function read(path: string): string {
-	return readFileSync(join(ROOT, path), "utf8");
-}
 
 interface SourceEntry {
 	key?: unknown;
@@ -56,15 +42,7 @@ function citedKeys(path: string): string[] {
 	return keys;
 }
 
-function headings(path: string): Set<string> {
-	return new Set(
-		read(path)
-			.split(/\r?\n/)
-			.flatMap((line) => /^#{1,6}\s+(.+?)\s*$/.exec(line)?.[1] ?? []),
-	);
-}
-
-const paths = contentPaths();
+const paths = contentFiles().map((f) => f.path);
 
 describe("content sources", () => {
 	test("there is content to check", () => {
@@ -86,7 +64,7 @@ describe("content sources", () => {
 			}
 			const file = String(s.file);
 			expect(existsSync(join(ROOT, file)), `${path}: [${String(s.key)}] ${file} exists`).toBe(true);
-			expect([...headings(file)], `${path}: [${String(s.key)}] section in ${file}`).toContain(String(s.section));
+			expect(headings(file), `${path}: [${String(s.key)}] section in ${file}`).toContain(String(s.section));
 		}
 	});
 });
