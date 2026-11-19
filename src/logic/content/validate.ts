@@ -40,6 +40,7 @@ export function loadContent(files: readonly ContentFile[]): ContentSet {
  * - a site's `process`/`machine`, a process step's `machine` and a descent beat's `focus` exist and
  *   are the right kind;
  * - no two organelles share a `colour`;
+ * - a process's `real_rate` and `shown_rate` units can be compared (see slowedFactor);
  * - every number in the prose is cited (see checkCitations).
  */
 export function validateContent(records: readonly ContentRecord[]): ContentSet {
@@ -94,6 +95,7 @@ export function validateContent(records: readonly ContentRecord[]): ContentSet {
 				ref(r, "parent", r.parent, (k) => k === PARENT_KIND.cytoplasm, "the cell");
 				break;
 			case "process":
+				slowedFactor(r);
 				r.steps.forEach((s, i) => {
 					ref(r, `steps[${i}].machine`, s.machine, (k) => k === "machine", "a machine");
 				});

@@ -243,6 +243,25 @@ describe("the set is rejected, naming the file and the field", () => {
 		expect(e.message).toBe('content/processes/atp-synthesis.md: steps[0].machine: "rotor" names no content file');
 	});
 
+	test("a process whose shown rate cannot be compared with its real rate", () => {
+		const e = rejection(
+			edit(validSet(), "content/processes/atp-synthesis.md", "{ value: 1, unit: turns/s }", "{ value: 1, unit: aa/s }"),
+		);
+		expect(e.message).toBe(
+			'content/processes/atp-synthesis.md: shown_rate.unit: "aa/s" cannot be compared with real_rate.unit "turns/s"',
+		);
+	});
+
+	test("a process whose rates are the same thing over different times", () => {
+		const set = edit(
+			validSet(),
+			"content/processes/atp-synthesis.md",
+			"{ value: 1, unit: turns/s }",
+			"{ value: 60, unit: turns/min }",
+		);
+		expect(slowedFactor(loadContent(files(set)).byId.get("atp-synthesis") as ProcessRecord)).toBe(100);
+	});
+
 	test("a descent beat's focus that names no file", () => {
 		const e = rejection(edit(validSet(), "content/descent/build-a-protein.md", "focus: crista", "focus: pore"));
 		expect(e.message).toBe('content/descent/build-a-protein.md: beats[1].focus: "pore" names no content file');

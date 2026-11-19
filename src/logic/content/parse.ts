@@ -293,11 +293,9 @@ export function parseContent(file: string, text: string): ContentRecord {
 				.list("steps", { nonEmpty: true })
 				.map((s) => ({ stop: s.stop("stop"), machine: s.id("machine") }));
 			const realRate = f.rate("real_rate", true) as Rate & { source: string };
+			// Whether the two units compare is left to slowedFactor during validation, which also
+			// converts between times of the same thing (nt/min against nt/s).
 			const shownRate = f.rate("shown_rate", false);
-			// The app shows "slowed ×N" as real ÷ shown, which only means something in one unit.
-			if (shownRate.unit !== realRate.unit) {
-				f.fail("shown_rate.unit", `"${shownRate.unit}" must match real_rate.unit "${realRate.unit}"`);
-			}
 			return { ...common, kind, layers: layers as Layers, steps, realRate, shownRate };
 		}
 		case "descent": {
