@@ -310,6 +310,13 @@ describe("what counts as a number that needs a citation", () => {
 		]);
 	});
 
+	test("a lowercase abbreviation does not end a sentence", () => {
+		expect(sentences("It is approx. 5 nm wide, e.g. in yeast [inv]. Next.")).toEqual([
+			"It is approx. 5 nm wide, e.g. in yeast [inv].",
+			"Next.",
+		]);
+	});
+
 	test("a decimal point does not end a sentence", () => {
 		expect(sentences("It adds 5.6 a second. Next.")).toEqual(["It adds 5.6 a second.", "Next."]);
 	});

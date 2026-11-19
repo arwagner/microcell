@@ -133,6 +133,10 @@ function hasNumber(sentence: string): boolean {
 	return false;
 }
 
+// A sentence ends at . ! or ? (plus closing quotes and citation markers) and a space, except after a
+// lowercase abbreviation, so "about 5 nm, e.g. in yeast [inv]." stays one cited sentence.
+const SENTENCE_END = /(?<=[.!?]["”')]*(?:\[[\w-]+\])*)(?<!\b(?:e\.g|i\.e|approx|ca|cf|vs)\.)\s+/;
+
 /** Splits prose into sentences. Citation markers right after a full stop belong to the sentence before. */
 export function sentences(prose: string): string[] {
 	const paragraphs: string[] = [];
@@ -152,7 +156,7 @@ export function sentences(prose: string): string[] {
 	flush();
 	return paragraphs
 		.map((p) => p.replace(/\]\([^)]*\)/g, "]")) // drop link targets: a URL's digits are not facts
-		.flatMap((p) => p.split(/(?<=[.!?]["”')]*(?:\[[\w-]+\])*)\s+/))
+		.flatMap((p) => p.split(SENTENCE_END))
 		.map((s) => s.trim())
 		.filter((s) => s !== "");
 }
