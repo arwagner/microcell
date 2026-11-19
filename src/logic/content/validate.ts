@@ -41,6 +41,16 @@ export function loadContent(files: readonly ContentFile[]): ContentSet {
 }
 
 /**
+ * Turns the bundler's glob result (keys from the project root with a leading slash, in no promised
+ * order) into content files named "content/cell.md" in path order, as the tests and messages name them.
+ */
+export function contentFilesFromGlob(modules: Readonly<Record<string, string>>): ContentFile[] {
+	return Object.entries(modules)
+		.map(([key, text]) => ({ path: key.replace(/^\//, ""), text }))
+		.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+}
+
+/**
  * Checks what no single file can check on its own, and throws a ContentError naming the file and
  * field at the first problem:
  * - ids are unique across all files;

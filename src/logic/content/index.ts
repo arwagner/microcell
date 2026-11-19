@@ -4,6 +4,7 @@ export {
 	type ContentFile,
 	type ContentSet,
 	checkCitations,
+	contentFilesFromGlob,
 	loadContent,
 	sentences,
 	slowedFactor,
