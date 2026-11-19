@@ -1,5 +1,13 @@
 import { ContentError, parseContent } from "./parse";
-import { type ContentRecord, type Kind, PLACED_KINDS, type PlacedKind, type Rate, type Source } from "./types";
+import {
+	type ContentRecord,
+	type Kind,
+	PLACED_KINDS,
+	type PlacedKind,
+	type ProcessRecord,
+	type Rate,
+	type Source,
+} from "./types";
 
 /** Every content record, checked as a whole, with a lookup by id. */
 export interface ContentSet {
@@ -226,7 +234,7 @@ function perSecond(rate: Rate): { thing: string; value: number } | undefined {
  * over different times (nt/min and nt/s) are converted to per second first. Any other pair of units
  * cannot be compared, and throws a ContentError on `shown_rate.unit`.
  */
-export function slowedFactor(process: { file: string; realRate: Rate; shownRate: Rate }): number {
+export function slowedFactor(process: Pick<ProcessRecord, "file" | "realRate" | "shownRate">): number {
 	const { realRate: real, shownRate: shown } = process;
 	if (real.unit.trim() === shown.unit.trim()) return real.value / shown.value;
 	const r = perSecond(real);
