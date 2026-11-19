@@ -8,6 +8,10 @@ An app for a curious beginner to explore the inside of a cell by zooming through
 The single cell the app is set inside: in v1, a generic human cell (the textbook composite holding every common organelle).
 _Avoid_: model cell, specimen
 
+**Reference cell**:
+The real kind of cell the cell's numbers come from: HeLa, a human cell line, wherever HeLa data exists, with gaps filled from other mammalian cells.
+_Avoid_: model cell, sample cell
+
 **Organelle**:
 A structure inside the cell with a job of its own, such as the nucleus or a mitochondrion.
 _Avoid_: part, component
