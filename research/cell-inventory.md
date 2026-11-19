@@ -152,6 +152,21 @@ Ranked by what a textbook-style first tour must show:
 
 ---
 
+## Familiar objects for the scale bar
+
+Sizes for the comparisons the scale bar shows. Where the app needs one number from a measured range, the number it uses is marked *(derived)* and the reason given.
+
+| Object | Measured size | Number the app uses | Source |
+|---|---|---|---|
+| Human scalp hair, width | 60–80 µm ("Scalp hair is a fiber 60 to 80 μm in diameter") | 70 µm *(derived: middle of the range)* | Wolfram 2003 via BioNumbers 114258 [S47] |
+| Human red blood cell, width | 7.7 µm (mean of 8 measurements); about 2 µm thick | 7.7 µm | Cell Size Database via BioNumbers 108239 [S48]; thickness Rosen 1967 via BioNumbers 100799 [S48] |
+| Bacterium (*E. coli*), width | 1.0–1.1 µm for 92% of wild-type cells; length 2.62–4.00 µm across growth conditions | 1 µm (width) | Nelson & Young 2000 via BioNumbers 100002 [S49]; Zaritsky & Woldringh 1978 via BioNumbers 104113 [S50] |
+| Flu (influenza) virus particle | 85–120 nm across, by electron microscopy | 100 nm *(derived: a round figure inside the measured range)* | Roy et al. 2000 via BioNumbers 101585 [S51] |
+| Ribosome | ~30 nm | 30 nm | Alberts 7e [S1] |
+| DNA double helix, width | 20.4 Å (≈2 nm) for B-DNA | 2 nm | Arnott & Hukins 1972 via BioNumbers 105243 [S41] |
+
+---
+
 ## Sources
 
 - **[S1]** Alberts B et al. *Molecular Biology of the Cell*, 7th ed. (W. W. Norton, 2022). Chapter 1 (mitochondrial genome 16,569 bp, 13 proteins); Chapter 2 (70% water; typical animal cell 15 µm; ATP ~2 mM; small organic molecules 100–1000 daltons; glucose 180 daltons); Chapter 12 (~10¹⁰ proteins of ~10,000 kinds; organelle descriptions; ER cisternae 20–30 nm, smooth ER tubules 30–60 nm; condensates ~50 nm to ≥1 µm; nucleolus; NPC 125 MDa, ~40 nm internal diameter, 500–1000 proteins; ribosomes ~30 nm; ~5 nm / 40 kDa passive-diffusion limit). Online sample chapters: https://nerd.wwnorton.com/ebooks/epub/mboc7/EPUB/content/4.3.1-chapter12.xhtml (and sibling files 1.1.x-chapter01, 1.2.x-chapter02, 4.3.x-chapter12).
@@ -198,5 +213,10 @@ Ranked by what a textbook-style first tour must show:
 - **[S44]** Fahimi P, Matta CF. "On the power per mitochondrion and the number of associated active ATP synthases." *Phys Biol* 2021;18(4), Table 4, via BioNumbers 117334–117336 (~100 in *Amoeba proteus* to 1,000–5,000 in *Ochromonas*). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=117334
 - **[S45]** Gerich JE, *Baillieres Clin Endocrinol Metab* 1993;7:551, and Nuttall FQ et al., *Diabetes Metab Res Rev* 2008;24:438, via BioNumbers 110776 (human plasma glucose ~3 mM after prolonged fasting to ~9 mM after meals). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=110776
 - **[S46]** John SA, Ottolia M, Weiss JN, Ribalet B. "Dynamic modulation of intracellular glucose imaged in single cells using a FRET-based glucose nanosensor." *Pflugers Arch* 2008;456:307 ("intracellular glucose level typically reaches 0.5–1 mM when extracellular glucose is 10 mM" in high-uptake cells; below the 0.07 mM detection limit in slow-uptake cells). https://pmc.ncbi.nlm.nih.gov/articles/PMC4339035/
+- **[S47]** Wolfram LJ. "Human hair: a unique physicochemical composite." *J Am Acad Dermatol* 2003, via BioNumbers 114258 (scalp hair 60–80 µm in diameter). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=114258
+- **[S48]** Gregory TR, Cell Size Database (2001–2005), via BioNumbers 108239 (human red blood cell diameter 7.7 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=108239 ; Rosen R, *Optimality Principles in Biology* (Plenum, 1967) p. 56, via BioNumbers 100799 (red blood cell thickness 2 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=100799
+- **[S49]** Nelson DE, Young KD. "Penicillin binding protein 5 affects cell diameter, contour, and morphology of *Escherichia coli*." *J Bacteriol* 2000;182:1714, via BioNumbers 100002 (diameters of 92% of wild-type cells between 1.0 and 1.1 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=100002
+- **[S50]** Zaritsky A, Woldringh CL. "Chromosome replication rate and cell shape in *Escherichia coli*: lack of coupling." *J Bacteriol* 1978;135:581, Table 1, via BioNumbers 104113 (diameter 0.68–1.04 µm, length 2.62–4.00 µm). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=104113
+- **[S51]** Roy AM, Parker JS, Parrish CR, Whittaker GR. "Early stages of influenza virus entry into Mv-1 lung cells: involvement of dynamin." *Virology* 2000;267:17, p. 19, via BioNumbers 101585 (influenza virions 85–120 nm by negative-stain electron microscopy). https://bionumbers.hms.harvard.edu/bionumber.aspx?id=101585
 
 Not used: NCBI Bookshelf's free Alberts 4th edition blocked automated access (captcha), so the 5th/7th-edition copies above were used instead.

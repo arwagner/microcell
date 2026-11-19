@@ -12,6 +12,10 @@ _Avoid_: model cell, specimen, generic cell
 The real cell the Cell's numbers come from: a HeLa cell (a human cell line grown in labs) wherever HeLa data exists, with gaps filled from other mammalian cells, each borrowed figure saying which cell it came from.
 _Avoid_: generic cell, textbook composite, average cell
 
+**Reference cell**:
+The real kind of cell the cell's numbers come from: HeLa, a human cell line, wherever HeLa data exists, with gaps filled from other mammalian cells.
+_Avoid_: model cell, sample cell
+
 **Organelle**:
 A structure inside the cell with a job of its own, such as the nucleus or a mitochondrion.
 _Avoid_: part, component
