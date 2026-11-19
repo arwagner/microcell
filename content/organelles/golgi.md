@@ -22,7 +22,7 @@ sources:
 The Golgi, your cell's post office
 
 ## Paragraph
-This is the Golgi apparatus, your cell's post office. Proteins arrive from the ER, and the Golgi finishes, labels and sorts them. Then it ships them out in vesicles, tiny bubbles of membrane [inv]. It is a stack of curved, flat sacs, each stack about 0.6 µm across [used].
+This is the Golgi apparatus, your cell's post office. Proteins arrive from the ER (endoplasmic reticulum), and the Golgi finishes, labels and sorts them. Then it ships them out in vesicles, tiny bubbles of membrane [inv]. It is a stack of curved, flat sacs, each stack about 0.6 micrometers (µm) across [used].
 
 ## Go deeper
 Your cell has one Golgi apparatus, made of several stacks that sit next to the nucleus [used][inv]. In human cells that line blood vessels, a stack's median width is 0.61 µm; in rat kidney cells, stacks of seven sacs are about 1 µm across [inv].

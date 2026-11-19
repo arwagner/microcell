@@ -15,6 +15,9 @@ sources:
   - key: inv
     file: research/cell-inventory.md
     section: Organelle inventory
+  - key: mol
+    file: research/cell-inventory.md
+    section: "Scale 3: macromolecules and molecular machines"
   - key: vol
     file: research/cell-inventory.md
     section: "How the space is divided (liver cell, Alberts Table 12-1 [S2])"
@@ -27,7 +30,7 @@ sources:
 Rough ER, where many proteins are made
 
 ## Paragraph
-This is the rough endoplasmic reticulum, or rough ER: a maze of flat sacs spreading out from the nucleus. Ribosomes stud its surface, which makes it look rough. They build proteins that go into membranes or get shipped out of the cell [inv]. Each sac's inside space is only 20 to 30 nm wide [inv].
+This is the rough endoplasmic reticulum, or rough ER: a maze of flat sacs spreading out from the nucleus. Ribosomes, tiny protein-building machines, stud its surface and make it look rough. The proteins they build go into membranes or get shipped out of the cell [inv][mol]. Each sac's inside space is only 20 to 30 nanometers (nm) wide [inv].
 
 ## Go deeper
 Your cell has one ER, a single connected network that grows out from the envelope around the nucleus [used][inv].

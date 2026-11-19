@@ -28,7 +28,7 @@ sources:
 A peroxisome, which breaks down fats and toxins
 
 ## Paragraph
-This is a peroxisome, a small round sac about 0.1 to 0.2 µm across [inv]. It breaks down fatty acids, the building blocks of fats, and harmful chemicals. It does this with oxidation reactions, chemical reactions that pull electrons off a molecule [inv].
+This is a peroxisome, a small round sac about 0.1 to 0.2 micrometers (µm) across [inv]. It breaks down fatty acids, the building blocks of fats, and harmful chemicals. It does this with oxidation reactions, chemical reactions that pull electrons off a molecule [inv].
 
 ## Go deeper
 A COS-7 cell, a monkey cell line used for imaging, has about 90 to 190 peroxisomes [used]. In a liver cell they fill about 1% of the volume [vol]. In mammals, some peroxisomes are tubes rather than balls [inv][src].

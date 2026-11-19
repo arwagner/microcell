@@ -16,13 +16,16 @@ sources:
   - key: inv
     file: research/cell-inventory.md
     section: Organelle inventory
+  - key: mol
+    file: research/cell-inventory.md
+    section: "Scale 3: macromolecules and molecular machines"
 ---
 
 ## Label
 The centrosome, where microtubules are organized
 
 ## Paragraph
-This is the centrosome. It sits beside the nucleus and organizes your cell's microtubules. At its heart are two centrioles, small barrels set at right angles, each about 440 nm long [used][inv]. When the cell divides, the centrosomes help pull its chromosomes apart [inv].
+This is the centrosome. It sits beside the nucleus and organizes your cell's microtubules, the hollow tubes it uses as roads [inv][mol]. At its heart are two centrioles, small barrels set at right angles, each about 440 nanometers (nm) long [used][inv]. When the cell divides, the centrosomes help pull apart its chromosomes, the bundles its DNA is wound into [inv][mol].
 
 ## Go deeper
 Each centriole is about 200 to 250 nm wide [inv]. Your cell has one centrosome, and two just before it divides [used].

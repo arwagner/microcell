@@ -25,7 +25,7 @@ sources:
 A microtubule, one of your cell's roads
 
 ## Paragraph
-This is a microtubule, a hollow tube about 25 nm wide that can be many micrometers long [used][mol]. Microtubules spread out from the centrosome. Motor proteins walk along them carrying cargo, like trucks on roads, and microtubules pull the chromosomes apart when the cell divides [mol].
+This is a microtubule, a hollow tube about 25 nanometers (nm) wide that can be many micrometers long [used][mol]. Microtubules spread out from the centrosome. Motor proteins walk along them carrying cargo, like trucks on roads, and microtubules pull apart the chromosomes, the bundles DNA is wound into, when the cell divides [mol].
 
 ## Go deeper
 Microtubules are part of the cytoskeleton, your cell's scaffolding, along with two thinner kinds of filament: actin filaments and intermediate filaments [mol]. Measured microtubules are 24 to 25 nm across [mol].

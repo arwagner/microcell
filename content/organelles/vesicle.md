@@ -28,7 +28,7 @@ sources:
 A vesicle, a tiny delivery bubble
 
 ## Paragraph
-This is a transport vesicle, a tiny bubble of membrane about 50 nm across [used]. Vesicles carry cargo, such as newly made proteins, between the ER, the Golgi and the plasma membrane [inv]. Motor proteins haul them along microtubules, the cell's roads [ship].
+This is a transport vesicle, a tiny bubble of membrane about 50 nanometers (nm) across [used]. Vesicles carry cargo, such as newly made proteins, between the endoplasmic reticulum (ER), the Golgi and the plasma membrane [inv]. Motor proteins haul them along microtubules, the cell's roads [ship].
 
 ## Go deeper
 Measured vesicles are 40 to 80 nm across, with an average near 45 nm [inv].

@@ -29,4 +29,4 @@ This is the nucleus, your cell's control room. It holds your DNA, the instructio
 ## Go deeper
 Your cell has one nucleus [used]. Stretched out end to end, the DNA packed inside it would reach about 2 meters [mol].
 
-The pores, called nuclear pore complexes, number 2,000 to 5,000 in a dividing human cell [inv]. Each is a ring about 120 nm across with a channel about 40 nm wide [inv]. Small molecules slip through freely, but proteins wider than about 5 nm need an escort [inv].
+The pores, called nuclear pore complexes, number 2,000 to 5,000 in a dividing human cell [inv]. Each is a ring about 120 nanometers (nm) across with a channel about 40 nm wide [inv]. Small molecules slip through freely, but proteins wider than about 5 nm need an escort [inv].

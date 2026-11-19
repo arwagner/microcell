@@ -25,7 +25,7 @@ sources:
 A lysosome, your cell's recycling bin
 
 ## Paragraph
-This is a lysosome, your cell's recycling bin. It is a small round sac, about 0.5 µm across, filled with acid and enzymes, proteins that speed up chemical reactions [used][inv]. It breaks down worn-out parts of the cell and material the cell has swallowed [inv].
+This is a lysosome, your cell's recycling bin. It is a small round sac, about 0.5 micrometers (µm) across, filled with acid and enzymes, proteins that speed up chemical reactions [used][inv]. It breaks down worn-out parts of the cell and material the cell has swallowed [inv].
 
 ## Go deeper
 A COS-7 cell, a monkey cell line used for imaging, has about 90 to 190 lysosomes [used]. Measured lysosomes are 0.5 to 1 µm across [inv]. Together they take up about 1% of a liver cell's volume [vol].
