@@ -35,5 +35,5 @@ Nobody has timed this motor inside a human cell. Studies of the enzyme find it m
 1. Protein complexes in the inner membrane use energy from your food to pump protons to one side, so they pile up there [proc].
 2. A proton hops onto the c-ring, the rotor's ring in the membrane, which turns it one notch; the proton hops off on the far side [proc].
 3. The c-ring is fixed to the central stalk, an off-center axle, so the axle turns with it [proc].
-4. The turning axle squeezes each of the F1 head's three working spots in turn: grab ADP and phosphate, press them into ATP, let the ATP go [proc].
+4. The turning axle squeezes each of the F1 head's three working spots in turn: grab ADP and phosphate, the two pieces ATP is made from, press them into ATP, let the ATP go [proc].
 5. Each one-third turn makes one ATP, so one full turn makes 3 ATP [proc].

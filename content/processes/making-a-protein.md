@@ -41,7 +41,7 @@ For the copying step, RNA polymerase II adds roughly 20 to 100 RNA letters (nucl
 1. At the transcription site, RNA polymerase II copies a gene from DNA into RNA. The RNA gets a protective cap and tail and loses the stretches that don't code for protein, which makes it finished mRNA [proc].
 2. The mRNA leaves the nucleus through a nuclear pore, out into the rest of the cell [proc].
 3. On the surface of the rough ER, the mRNA meets ribosomes; the ones here make proteins bound for a membrane or for outside the cell [inv].
-4. The ribosome's small subunit grabs the mRNA and slides to the start signal; then the large subunit joins it [proc].
+4. A ribosome comes in two pieces, called subunits: the small one grabs the mRNA and slides to the start signal, then the large one joins it [proc].
 5. The ribosome reads the mRNA one codon (three letters) at a time; for each codon, a tRNA, a small adapter molecule, brings one amino acid, which the ribosome adds to the growing chain [proc].
 6. At a stop codon, the finished chain is let go and the ribosome splits apart [proc].
 7. The chain folds into its working shape, often helped by other proteins called chaperones [proc].
